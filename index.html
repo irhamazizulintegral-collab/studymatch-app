@@ -19,6 +19,7 @@
       --shadow: 0 20px 50px rgba(17,24,39,0.10);
       --radius: 24px;
       --green: #16a34a;
+      --pink: #ec4899;
     }
 
     body {
@@ -38,7 +39,7 @@
     }
 
     .container {
-      max-width: 1140px;
+      max-width: 1180px;
       margin: 0 auto;
     }
 
@@ -51,7 +52,6 @@
     }
 
     .hidden { display: none !important; }
-
     .page { animation: fadePage 0.45s ease; }
 
     @keyframes fadePage {
@@ -337,7 +337,18 @@
       box-shadow: 0 8px 18px rgba(17,24,39,0.06);
     }
 
-    .google-btn, .dark-btn, .soft-btn, .outline-btn, .nav-btn, .green-btn, .danger-btn {
+    .auth-help-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .google-btn, .dark-btn, .soft-btn, .outline-btn, .nav-btn, .green-btn, .danger-btn, .pink-btn {
       border: none;
       border-radius: 14px;
       padding: 13px 16px;
@@ -351,7 +362,7 @@
       position: relative;
     }
 
-    .dark-btn:hover, .soft-btn:hover, .outline-btn:hover, .google-btn:hover, .nav-btn:hover, .green-btn:hover, .danger-btn:hover {
+    .dark-btn:hover, .soft-btn:hover, .outline-btn:hover, .google-btn:hover, .nav-btn:hover, .green-btn:hover, .danger-btn:hover, .pink-btn:hover {
       transform: translateY(-2px);
     }
 
@@ -387,6 +398,12 @@
       background: linear-gradient(135deg, #16a34a, #22c55e);
       color: white;
       box-shadow: 0 12px 24px rgba(34,197,94,0.18);
+    }
+
+    .pink-btn {
+      background: linear-gradient(135deg, #db2777, #ec4899);
+      color: white;
+      box-shadow: 0 12px 24px rgba(236,72,153,0.22);
     }
 
     .danger-btn {
@@ -546,6 +563,12 @@
       gap: 20px;
     }
 
+    .grid-home-main {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+    }
+
     .panel { padding: 22px; }
 
     .list {
@@ -553,7 +576,7 @@
       gap: 14px;
     }
 
-    .student-item, .schedule-item {
+    .student-item, .schedule-item, .friend-item {
       padding: 18px;
       border: 1px solid #eceff4;
       border-radius: 20px;
@@ -566,7 +589,7 @@
       animation: fadePage 0.4s ease;
     }
 
-    .student-item:hover, .schedule-item:hover {
+    .student-item:hover, .schedule-item:hover, .friend-item:hover {
       transform: translateY(-4px);
       box-shadow: 0 14px 28px rgba(17,24,39,0.08);
     }
@@ -724,6 +747,21 @@
       flex-wrap: wrap;
     }
 
+    .friend-empty {
+      padding: 18px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1080px) {
+      .grid-home-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 920px) {
       .split, .grid, .stat-row, .grid-2 {
         grid-template-columns: 1fr;
@@ -737,7 +775,7 @@
         min-height: auto;
       }
 
-      .student-item, .schedule-item {
+      .student-item, .schedule-item, .friend-item {
         align-items: flex-start;
         flex-direction: column;
       }
@@ -815,9 +853,9 @@
             <div class="feature-box">
               <div class="feature-item"><span class="feature-dot"></span> Login akun mahasiswa dan registrasi user baru</div>
               <div class="feature-item"><span class="feature-dot"></span> Pencarian partner belajar yang lebih relevan</div>
+              <div class="feature-item"><span class="feature-dot"></span> Tambah teman lalu pilih diskusi dengan siapa</div>
               <div class="feature-item"><span class="feature-dot"></span> Diskusi langsung di aplikasi dan integrasi WhatsApp</div>
               <div class="feature-item"><span class="feature-dot"></span> Pengelolaan jadwal belajar / diskusi secara fleksibel</div>
-              <div class="feature-item"><span class="feature-dot"></span> Profil pengguna yang bisa diperbarui kapan saja</div>
             </div>
           </div>
         </div>
@@ -887,6 +925,10 @@
               </select>
             </div>
             <div class="input-group">
+              <label>Nomor WhatsApp</label>
+              <input id="registerWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
+            </div>
+            <div class="input-group">
               <label>Email</label>
               <input id="registerEmail" type="email" placeholder="email@kampus.ac.id" />
             </div>
@@ -898,6 +940,10 @@
               <span class="btn-label"><span class="btn-icon">✅</span> Daftar</span>
               <span class="btn-loader"></span>
             </button>
+          </div>
+
+          <div class="auth-help-box">
+            Belum punya akun? Daftar dulu dengan data kampusmu, termasuk nomor WhatsApp supaya nanti bisa lanjut diskusi dan koordinasi jadwal lebih mudah.
           </div>
         </div>
       </section>
@@ -932,50 +978,66 @@
         <div class="brand-box card">
           <div class="badge">🏠 Home Dashboard</div>
           <h1 style="font-size:34px; margin-top:14px; margin-bottom:10px;">Halo, <span id="homeUserName">Pengguna</span> 👋</h1>
-          <p>Temukan partner belajar berdasarkan fakultas dan jurusan yang sesuai.</p>
+          <p>Temukan partner belajar, tambahkan teman, lalu pilih siapa yang ingin diajak diskusi.</p>
         </div>
 
-        <div class="grid">
-          <div class="card panel">
-            <h3 style="margin-bottom:16px;">Filter Teman Belajar</h3>
-            <div class="input-group">
-              <label>Fakultas</label>
-              <select id="filterFaculty"></select>
+        <div class="grid-home-main">
+          <div>
+            <div class="grid">
+              <div class="card panel">
+                <h3 style="margin-bottom:16px;">Filter Teman Belajar</h3>
+                <div class="input-group">
+                  <label>Fakultas</label>
+                  <select id="filterFaculty"></select>
+                </div>
+                <div class="input-group">
+                  <label>Jurusan</label>
+                  <select id="filterMajor"></select>
+                </div>
+                <button class="dark-btn" type="button" onclick="filterStudents()">
+                  <span class="btn-label"><span class="btn-icon">🔎</span> Tampilkan Rekomendasi</span>
+                </button>
+              </div>
+
+              <div class="card panel">
+                <div class="section-title-row">
+                  <div>
+                    <h2 style="margin-bottom:6px;">Rekomendasi Teman Belajar</h2>
+                    <div class="muted">Partner belajar yang cocok dengan kebutuhanmu</div>
+                  </div>
+                  <div class="match" id="resultCount">0 hasil</div>
+                </div>
+
+                <div class="list" id="studentList"></div>
+              </div>
             </div>
-            <div class="input-group">
-              <label>Jurusan</label>
-              <select id="filterMajor"></select>
+
+            <div class="card panel" style="margin-top:20px;">
+              <div class="stat-row">
+                <div class="stat-box">
+                  <strong>71%</strong>
+                  <span class="muted">Tertarik memakai aplikasi</span>
+                </div>
+                <div class="stat-box">
+                  <strong>89%</strong>
+                  <span class="muted">Sering belajar sendiri</span>
+                </div>
+                <div class="stat-box">
+                  <strong>28%</strong>
+                  <span class="muted">Ingin fitur filter & chat</span>
+                </div>
+              </div>
             </div>
-            <button class="dark-btn" type="button" onclick="filterStudents()">
-              <span class="btn-label"><span class="btn-icon">🔎</span> Tampilkan Rekomendasi</span>
-            </button>
           </div>
 
           <div class="card panel">
             <div class="section-title-row">
               <div>
-                <h2 style="margin-bottom:6px;">Rekomendasi Teman Belajar</h2>
-                <div class="muted">Partner belajar yang cocok dengan kebutuhanmu</div>
-              </div>
-              <div class="match" id="resultCount">0 hasil</div>
-            </div>
-
-            <div class="list" id="studentList"></div>
-
-            <div class="stat-row">
-              <div class="stat-box">
-                <strong>71%</strong>
-                <span class="muted">Tertarik memakai aplikasi</span>
-              </div>
-              <div class="stat-box">
-                <strong>89%</strong>
-                <span class="muted">Sering belajar sendiri</span>
-              </div>
-              <div class="stat-box">
-                <strong>28%</strong>
-                <span class="muted">Ingin fitur filter & chat</span>
+                <h2 style="margin-bottom:6px;">Daftar Teman Saya</h2>
+                <div class="muted">Teman yang sudah kamu tambahkan untuk dipilih saat diskusi.</div>
               </div>
             </div>
+            <div class="list" id="friendList"></div>
           </div>
         </div>
       </section>
@@ -1009,13 +1071,18 @@
             <div class="section-title-row">
               <div>
                 <h2 style="margin-bottom:6px;">Ruang Diskusi</h2>
-                <div class="muted">Tambahkan pesan diskusi bersama teman belajar.</div>
+                <div class="muted">Pilih teman lalu kirim pesan diskusi.</div>
               </div>
             </div>
 
             <div class="chat-box" id="chatBox"></div>
 
             <div class="input-group" style="margin-top:16px;">
+              <label>Pilih Teman Diskusi</label>
+              <select id="discussionFriendSelect"></select>
+            </div>
+
+            <div class="input-group">
               <label>Nama Teman Diskusi</label>
               <input id="discussionTarget" type="text" placeholder="Contoh: Nadia Putri" />
             </div>
@@ -1038,33 +1105,11 @@
           <div class="card panel">
             <div class="section-title-row">
               <div>
-                <h2 style="margin-bottom:6px;">Info Diskusi</h2>
-                <div class="muted">Gunakan fitur ini untuk koordinasi diskusi sebelum lanjut ke WhatsApp.</div>
+                <h2 style="margin-bottom:6px;">Teman Tersimpan</h2>
+                <div class="muted">Pilih teman untuk memulai diskusi cepat.</div>
               </div>
             </div>
-
-            <div class="list">
-              <div class="schedule-item">
-                <div>
-                  <strong>Diskusi Tugas Manajemen Inovasi</strong>
-                  <div class="muted" style="margin-top:6px;">Bisa dipakai untuk menyepakati topik, pembagian tugas, dan jadwal diskusi.</div>
-                </div>
-              </div>
-
-              <div class="schedule-item">
-                <div>
-                  <strong>Nomor WhatsApp Profil</strong>
-                  <div class="muted" style="margin-top:6px;">Nomor WA diambil dari halaman profil. Jadi sebelum tekan tombol WhatsApp, isi dulu nomor WA kamu.</div>
-                </div>
-              </div>
-
-              <div class="schedule-item">
-                <div>
-                  <strong>Jadwal Belajar</strong>
-                  <div class="muted" style="margin-top:6px;">Setelah diskusi, kamu bisa lanjut atur jadwal di menu Jadwal.</div>
-                </div>
-              </div>
-            </div>
+            <div class="list" id="discussionFriendList"></div>
           </div>
         </div>
       </section>
@@ -1311,6 +1356,7 @@
 
     const STORAGE_USERS = 'studymatch_users';
     const STORAGE_CURRENT = 'studymatch_current_user';
+    const STORAGE_FRIENDS = 'studymatch_friends';
 
     const firstNames = [
       'Nadia','Raka','Dimas','Salsa','Aulia','Rina','Fajar','Rizky','Nabila','Tegar',
@@ -1342,7 +1388,8 @@
       schedules: [
         { title: 'Diskusi Manajemen Inovasi', date: '2026-03-15', time: '19:00', place: 'Google Meet', note: 'Bahas pembagian tugas presentasi' },
         { title: 'Belajar Bareng Akuntansi', date: '2026-03-17', time: '16:00', place: 'Perpustakaan', note: 'Review materi dan latihan soal' }
-      ]
+      ],
+      selectedDiscussionFriend: ''
     };
 
     function setButtonLoading(buttonId, isLoading) {
@@ -1379,6 +1426,19 @@
 
     function clearCurrentUser() {
       localStorage.removeItem(STORAGE_CURRENT);
+    }
+
+    function getFriendKey() {
+      return `${STORAGE_FRIENDS}_${(appState.user.email || '').toLowerCase()}`;
+    }
+
+    function getFriends() {
+      const raw = localStorage.getItem(getFriendKey());
+      return raw ? JSON.parse(raw) : [];
+    }
+
+    function saveFriends(friends) {
+      localStorage.setItem(getFriendKey(), JSON.stringify(friends));
     }
 
     function makeDummyUsers() {
@@ -1436,7 +1496,6 @@
 
     function setPage(page) {
       if (appState.currentPage !== page) appState.previousPage = appState.currentPage;
-
       appState.currentPage = page;
 
       ['loginPage','homePage','profilePage','discussionPage','schedulePage'].forEach(id => {
@@ -1452,6 +1511,8 @@
       const homeUserName = document.getElementById('homeUserName');
       if (homeUserName) homeUserName.textContent = appState.user.name;
       fillProfileForm();
+      renderFriends();
+      populateDiscussionFriendSelect();
     }
 
     function goHome() {
@@ -1484,6 +1545,8 @@
 
     function openDiscussion() {
       renderDiscussion();
+      renderDiscussionFriends();
+      populateDiscussionFriendSelect();
       setPage('discussion');
     }
 
@@ -1544,11 +1607,12 @@
         const faculty = document.getElementById('registerFaculty').value;
         const major = document.getElementById('registerMajor').value;
         const semester = document.getElementById('registerSemester').value;
+        const whatsapp = document.getElementById('registerWhatsapp').value.trim();
         const email = document.getElementById('registerEmail').value.trim().toLowerCase();
         const password = document.getElementById('registerPassword').value.trim();
 
-        if (!name || !faculty || !major || !semester || !email || !password) {
-          alert('Lengkapi semua data pendaftaran.');
+        if (!name || !faculty || !major || !semester || !whatsapp || !email || !password) {
+          alert('Lengkapi semua data pendaftaran, termasuk nomor WhatsApp.');
           setButtonLoading('registerBtn', false);
           return;
         }
@@ -1573,9 +1637,9 @@
           faculty,
           major,
           semester,
+          whatsapp,
           email,
           password,
-          whatsapp: '',
           bio: ''
         };
 
@@ -1589,7 +1653,7 @@
           major,
           semester,
           email,
-          whatsapp: '',
+          whatsapp,
           bio: ''
         };
 
@@ -1676,8 +1740,8 @@
       const whatsapp = document.getElementById('profileWhatsapp').value.trim();
       const bio = document.getElementById('profileBio').value.trim();
 
-      if (!name || !faculty || !major || !semester || !email) {
-        alert('Lengkapi data profil terlebih dulu.');
+      if (!name || !faculty || !major || !semester || !email || !whatsapp) {
+        alert('Lengkapi data profil terlebih dulu, termasuk nomor WhatsApp.');
         return;
       }
 
@@ -1722,8 +1786,45 @@
           major: user.major,
           semester: user.semester,
           whatsapp: user.whatsapp || '',
+          email: user.email,
           match: 80 + (idx % 20)
         }));
+    }
+
+    function addFriendByEmail(email) {
+      const users = getUsers();
+      const found = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (!found) return;
+
+      const friends = getFriends();
+      const exists = friends.some(f => f.email.toLowerCase() === found.email.toLowerCase());
+
+      if (exists) {
+        alert('Teman ini sudah ada di daftar temanmu.');
+        return;
+      }
+
+      friends.push({
+        name: found.name,
+        faculty: found.faculty,
+        major: found.major,
+        semester: found.semester,
+        email: found.email,
+        whatsapp: found.whatsapp || ''
+      });
+
+      saveFriends(friends);
+      renderFriends();
+      populateDiscussionFriendSelect();
+      alert(`${found.name} berhasil ditambahkan ke daftar teman.`);
+    }
+
+    function removeFriend(email) {
+      const friends = getFriends().filter(f => f.email.toLowerCase() !== email.toLowerCase());
+      saveFriends(friends);
+      renderFriends();
+      renderDiscussionFriends();
+      populateDiscussionFriendSelect();
     }
 
     function renderStudents(list) {
@@ -1750,6 +1851,9 @@
             </div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="pink-btn" type="button" style="width:auto;" onclick="addFriendByEmail('${student.email.replace(/'/g, "\\'")}')">
+              <span class="btn-label"><span class="btn-icon">➕</span> Tambah Teman</span>
+            </button>
             <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${student.name.replace(/'/g, "\\'")}')">
               <span class="btn-label"><span class="btn-icon">💬</span> Diskusi</span>
             </button>
@@ -1759,6 +1863,113 @@
           </div>
         </div>
       `).join('');
+    }
+
+    function renderFriends() {
+      const list = document.getElementById('friendList');
+      if (!list) return;
+
+      const friends = getFriends();
+
+      if (!friends.length) {
+        list.innerHTML = `
+          <div class="friend-empty">
+            Belum ada teman yang ditambahkan. Pilih dari rekomendasi teman belajar lalu tekan tombol <b>Tambah Teman</b>.
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = friends.map(friend => `
+        <div class="friend-item">
+          <div class="student-meta">
+            <div class="avatar">${initials(friend.name)}</div>
+            <div>
+              <div style="font-weight:700;">${friend.name}</div>
+              <div class="chips">
+                <span class="chip">${friend.major}</span>
+                <span class="chip">${friend.semester}</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${friend.name.replace(/'/g, "\\'")}')">
+              <span class="btn-label"><span class="btn-icon">💬</span> Pilih Diskusi</span>
+            </button>
+            <button class="danger-btn" type="button" style="width:auto;" onclick="removeFriend('${friend.email.replace(/'/g, "\\'")}')">
+              <span class="btn-label"><span class="btn-icon">🗑️</span> Hapus</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderDiscussionFriends() {
+      const list = document.getElementById('discussionFriendList');
+      if (!list) return;
+
+      const friends = getFriends();
+
+      if (!friends.length) {
+        list.innerHTML = `
+          <div class="friend-empty">
+            Belum ada teman tersimpan. Tambahkan dulu dari dashboard utama, lalu nanti kamu bisa pilih diskusi dengan siapa.
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = friends.map(friend => `
+        <div class="friend-item">
+          <div class="student-meta">
+            <div class="avatar">${initials(friend.name)}</div>
+            <div>
+              <div style="font-weight:700;">${friend.name}</div>
+              <div class="chips">
+                <span class="chip">${friend.major}</span>
+                <span class="chip">${friend.semester}</span>
+              </div>
+            </div>
+          </div>
+          <button class="soft-btn" type="button" style="width:auto;" onclick="selectDiscussionFriend('${friend.name.replace(/'/g, "\\'")}')">
+            <span class="btn-label"><span class="btn-icon">🎯</span> Pilih</span>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function populateDiscussionFriendSelect() {
+      const select = document.getElementById('discussionFriendSelect');
+      if (!select) return;
+
+      const friends = getFriends();
+      select.innerHTML = '<option value="">Pilih teman dari daftar</option>';
+
+      friends.forEach(friend => {
+        const option = document.createElement('option');
+        option.value = friend.name;
+        option.textContent = `${friend.name} - ${friend.major}`;
+        select.appendChild(option);
+      });
+
+      if (appState.selectedDiscussionFriend) {
+        select.value = appState.selectedDiscussionFriend;
+      }
+
+      select.onchange = function() {
+        if (this.value) {
+          selectDiscussionFriend(this.value);
+        }
+      };
+    }
+
+    function selectDiscussionFriend(name) {
+      appState.selectedDiscussionFriend = name;
+      const targetInput = document.getElementById('discussionTarget');
+      const select = document.getElementById('discussionFriendSelect');
+
+      if (targetInput) targetInput.value = name;
+      if (select) select.value = name;
     }
 
     function filterStudents() {
@@ -1798,7 +2009,7 @@
     }
 
     function addDiscussionMessage() {
-      const target = document.getElementById('discussionTarget').value.trim() || 'Teman Diskusi';
+      const target = document.getElementById('discussionTarget').value.trim() || appState.selectedDiscussionFriend || 'Teman Diskusi';
       const text = document.getElementById('discussionInput').value.trim();
 
       if (!text) {
@@ -1825,7 +2036,7 @@
     }
 
     function openWhatsApp() {
-      const target = document.getElementById('discussionTarget').value.trim() || 'teman diskusi';
+      const target = document.getElementById('discussionTarget').value.trim() || appState.selectedDiscussionFriend || 'teman diskusi';
       const wa = (appState.user.whatsapp || '').replace(/[^0-9]/g, '');
 
       if (!wa) {
@@ -1838,9 +2049,11 @@
     }
 
     function startDiscussionWith(name) {
+      appState.selectedDiscussionFriend = name;
       openDiscussion();
       document.getElementById('discussionTarget').value = name;
       document.getElementById('discussionInput').focus();
+      populateDiscussionFriendSelect();
     }
 
     function startWhatsAppWith(name) {
@@ -1979,8 +2192,11 @@
 
       fillProfileForm();
       renderStudents(getVisibleStudents());
+      renderFriends();
       renderDiscussion();
+      renderDiscussionFriends();
       renderSchedules();
+      populateDiscussionFriendSelect();
 
       const loggedIn = restoreSession();
       if (!loggedIn) setPage('login');
