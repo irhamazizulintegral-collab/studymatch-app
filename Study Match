@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyMatch App</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    :root{
+      --bg: #f4f7fb;
+      --card: rgba(255,255,255,0.88);
+      --text: #111827;
+      --muted: #6b7280;
+      --primary: #4f46e5;
+      --primary-2: #06b6d4;
+      --dark: #111827;
+      --border: #e5e7eb;
+      --shadow: 0 20px 50px rgba(17,24,39,0.10);
+      --radius: 24px;
+      --green: #16a34a;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(79,70,229,0.12), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(6,182,212,0.10), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hidden { display: none !important; }
+
+    .page { animation: fadePage 0.45s ease; }
+
+    @keyframes fadePage {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatSoft {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulseGlow {
+      0%,100% { box-shadow: 0 0 0 rgba(79,70,229,0.0); }
+      50% { box-shadow: 0 0 30px rgba(79,70,229,0.18); }
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .login-hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 650px;
+      padding: 38px;
+      color: white;
+      background: linear-gradient(135deg, #0f172a 0%, #4338ca 58%, #06b6d4 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .login-hero::before,
+    .login-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.35;
+    }
+
+    .login-hero::before {
+      width: 220px;
+      height: 220px;
+      background: rgba(255,255,255,0.18);
+      top: -40px;
+      right: -50px;
+      animation: floatSoft 6s ease-in-out infinite;
+    }
+
+    .login-hero::after {
+      width: 160px;
+      height: 160px;
+      background: rgba(255,255,255,0.12);
+      left: -20px;
+      bottom: 40px;
+      animation: floatSoft 7s ease-in-out infinite reverse;
+    }
+
+    .hero-inner,
+    .hero-bottom {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.16);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    .hero-title {
+      font-size: 46px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      max-width: 560px;
+    }
+
+    .hero-text {
+      color: rgba(255,255,255,0.84);
+      line-height: 1.8;
+      max-width: 540px;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .hero-stat {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .feature-box {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      padding: 20px;
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: rgba(255,255,255,0.90);
+      font-size: 14px;
+    }
+
+    .feature-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: white;
+      flex-shrink: 0;
+    }
+
+    .auth-panel {
+      min-height: 650px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .auth-header { margin-bottom: 18px; }
+
+    .auth-subtitle {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      background: #f3f4f6;
+      padding: 6px;
+      border-radius: 16px;
+    }
+
+    .tab {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: #4b5563;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .tab.active {
+      background: white;
+      color: var(--dark);
+      box-shadow: 0 8px 18px rgba(17,24,39,0.06);
+    }
+
+    .google-btn, .dark-btn, .soft-btn, .outline-btn, .nav-btn, .green-btn, .danger-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dark-btn:hover, .soft-btn:hover, .outline-btn:hover, .google-btn:hover, .nav-btn:hover, .green-btn:hover, .danger-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .google-btn {
+      width: 100%;
+      background: white;
+      color: var(--dark);
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+      box-shadow: 0 10px 20px rgba(17,24,39,0.04);
+    }
+
+    .dark-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--dark), #1f2937);
+      color: white;
+      box-shadow: 0 12px 24px rgba(17,24,39,0.18);
+    }
+
+    .soft-btn {
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .outline-btn, .nav-btn {
+      background: white;
+      color: var(--dark);
+      border: 1px solid #d1d5db;
+      box-shadow: 0 8px 20px rgba(17,24,39,0.05);
+    }
+
+    .green-btn {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: white;
+      box-shadow: 0 12px 24px rgba(34,197,94,0.18);
+    }
+
+    .danger-btn {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .btn-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .divider {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 14px 0 16px;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 35%;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .auth-form-box { animation: fadeForm 0.35s ease; }
+
+    @keyframes fadeForm {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .input-group { margin-bottom: 14px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+      color: #374151;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+      transition: 0.2s ease;
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #6366f1;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.08);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      animation: fadePage 0.45s ease;
+    }
+
+    .topbar-left, .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand-box {
+      padding: 28px;
+      background: linear-gradient(135deg, #111827, #4f46e5);
+      color: white;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-box::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -30px;
+      top: -30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .brand-box p {
+      color: rgba(255,255,255,0.84);
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-box .badge,
+    .brand-box h1 {
+      position: relative;
+      z-index: 1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .panel { padding: 22px; }
+
+    .list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .student-item, .schedule-item {
+      padding: 18px;
+      border: 1px solid #eceff4;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      background: white;
+      transition: 0.25s ease;
+      animation: fadePage 0.4s ease;
+    }
+
+    .student-item:hover, .schedule-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(17,24,39,0.08);
+    }
+
+    .student-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 10px 20px rgba(79,70,229,0.18);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .match {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #ecfeff;
+      color: #0f766e;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    .profile-header {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #4338ca, #06b6d4);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 12px 22px rgba(67,56,202,0.18);
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .stat-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #eef2f7;
+      transition: 0.2s ease;
+    }
+
+    .stat-box:hover { transform: translateY(-3px); }
+
+    .stat-box strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .chat-box {
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 320px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .message.self { align-items: flex-end; }
+    .message.other { align-items: flex-start; }
+
+    .bubble {
+      max-width: 80%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.self .bubble {
+      background: #4f46e5;
+      color: white;
+      border-bottom-right-radius: 6px;
+    }
+
+    .message.other .bubble {
+      background: white;
+      border: 1px solid #e5e7eb;
+      color: #111827;
+      border-bottom-left-radius: 6px;
+    }
+
+    .message-meta {
+      font-size: 11px;
+      color: #6b7280;
+      padding: 0 4px;
+    }
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 920px) {
+      .split, .grid, .stat-row, .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .login-hero, .auth-panel {
+        min-height: auto;
+      }
+
+      .student-item, .schedule-item {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="container">
+
+      <!-- LOGIN PAGE -->
+      <section id="loginPage" class="split page">
+        <div class="login-hero card">
+          <div class="hero-inner">
+            <div class="badge">✨ Dashboard Login • StudyMatch</div>
+            <h1 class="hero-title">Masuk dulu, lalu temukan partner belajar yang paling cocok.</h1>
+            <p class="hero-text">
+              StudyMatch membantu mahasiswa menemukan teman belajar berdasarkan fakultas, jurusan, dan semester.
+              Sekarang juga dilengkapi ruang diskusi dan jadwal belajar bersama.
+            </p>
+
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <strong>71%</strong>
+                <span>Tertarik memakai aplikasi</span>
+              </div>
+              <div class="hero-stat">
+                <strong>89%</strong>
+                <span>Sering belajar sendiri</span>
+              </div>
+              <div class="hero-stat">
+                <strong>28%</strong>
+                <span>Menginginkan fitur filter</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-bottom">
+            <div class="feature-box">
+              <div class="feature-item"><span class="feature-dot"></span> Login email dan Google demo</div>
+              <div class="feature-item"><span class="feature-dot"></span> Daftar akun lengkap</div>
+              <div class="feature-item"><span class="feature-dot"></span> Diskusi di aplikasi & lanjut WhatsApp</div>
+              <div class="feature-item"><span class="feature-dot"></span> Jadwal belajar yang bisa diedit</div>
+              <div class="feature-item"><span class="feature-dot"></span> Profil yang bisa diedit</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-panel card">
+          <div class="auth-header">
+            <h2 style="margin-bottom:8px;">Selamat datang di StudyMatch</h2>
+            <p class="auth-subtitle">Masuk ke akunmu atau buat akun baru untuk mulai mencari teman belajar.</p>
+          </div>
+
+          <div class="tabs">
+            <button class="tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')">
+              <span class="btn-icon">🔐</span> Login
+            </button>
+            <button class="tab" id="tabRegister" type="button" onclick="switchAuthTab('register')">
+              <span class="btn-icon">📝</span> Daftar
+            </button>
+          </div>
+
+          <button class="google-btn" type="button" onclick="openGoogleLogin()">
+            <span class="btn-icon">🔵</span> Masuk dengan Google
+          </button>
+          <div class="divider">atau lanjut pakai email</div>
+
+          <div id="loginForm" class="auth-form-box">
+            <div class="input-group">
+              <label>Email</label>
+              <input id="loginEmail" type="email" value="demo@studymatch.id" />
+            </div>
+            <div class="input-group">
+              <label>Password</label>
+              <input id="loginPassword" type="password" value="12345678" />
+            </div>
+            <button class="dark-btn" type="button" onclick="loginManual()">
+              <span class="btn-icon">➡️</span> Login
+            </button>
+          </div>
+
+          <div id="registerForm" class="auth-form-box hidden">
+            <div class="input-group">
+              <label>Nama Lengkap</label>
+              <input id="registerName" type="text" placeholder="Nama lengkap" />
+            </div>
+            <div class="input-group">
+              <label>Fakultas</label>
+              <select id="registerFaculty">
+                <option value="">Pilih Fakultas</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Jurusan</label>
+              <select id="registerMajor"></select>
+            </div>
+            <div class="input-group">
+              <label>Semester</label>
+              <select id="registerSemester">
+                <option value="">Pilih Semester</option>
+                <option>Semester 1</option>
+                <option>Semester 2</option>
+                <option>Semester 3</option>
+                <option>Semester 4</option>
+                <option>Semester 5</option>
+                <option>Semester 6</option>
+                <option>Semester 7</option>
+                <option>Semester 8</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Email</label>
+              <input id="registerEmail" type="email" placeholder="email@kampus.ac.id" />
+            </div>
+            <div class="input-group">
+              <label>Password</label>
+              <input id="registerPassword" type="password" placeholder="Minimal 8 karakter" />
+            </div>
+            <button class="dark-btn" type="button" onclick="registerManual()">
+              <span class="btn-icon">✅</span> Daftar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOME PAGE -->
+      <section id="homePage" class="hidden page">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="nav-btn" type="button" onclick="goBack()">
+              <span class="btn-icon">⬅️</span> Kembali
+            </button>
+            <button class="nav-btn" type="button" onclick="goHome()">
+              <span class="btn-icon">🏠</span> Home
+            </button>
+          </div>
+          <div class="topbar-right">
+            <button class="nav-btn" type="button" onclick="openDiscussion()">
+              <span class="btn-icon">💬</span> Diskusi
+            </button>
+            <button class="nav-btn" type="button" onclick="openSchedulePage()">
+              <span class="btn-icon">📅</span> Jadwal
+            </button>
+            <button class="nav-btn" type="button" onclick="openProfile()">
+              <span class="btn-icon">👤</span> Profil
+            </button>
+            <button class="nav-btn" type="button" onclick="logoutUser()">
+              <span class="btn-icon">🚪</span> Log Out
+            </button>
+          </div>
+        </div>
+
+        <div class="brand-box card">
+          <div class="badge">🏠 Home Dashboard</div>
+          <h1 style="font-size:34px; margin-top:14px; margin-bottom:10px;">Halo, <span id="homeUserName">Pengguna</span> 👋</h1>
+          <p>Temukan partner belajar berdasarkan fakultas dan jurusan yang sesuai.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card panel">
+            <h3 style="margin-bottom:16px;">Filter Teman Belajar</h3>
+            <div class="input-group">
+              <label>Fakultas</label>
+              <select id="filterFaculty"></select>
+            </div>
+            <div class="input-group">
+              <label>Jurusan</label>
+              <select id="filterMajor"></select>
+            </div>
+            <button class="dark-btn" type="button" onclick="filterStudents()">
+              <span class="btn-icon">🔎</span> Tampilkan Rekomendasi
+            </button>
+          </div>
+
+          <div class="card panel">
+            <div class="section-title-row">
+              <div>
+                <h2 style="margin-bottom:6px;">Rekomendasi Teman Belajar</h2>
+                <div class="muted">Partner belajar yang cocok dengan kebutuhanmu</div>
+              </div>
+              <div class="match" id="resultCount">0 hasil</div>
+            </div>
+
+            <div class="list" id="studentList"></div>
+
+            <div class="stat-row">
+              <div class="stat-box">
+                <strong>71%</strong>
+                <span class="muted">Tertarik memakai aplikasi</span>
+              </div>
+              <div class="stat-box">
+                <strong>89%</strong>
+                <span class="muted">Sering belajar sendiri</span>
+              </div>
+              <div class="stat-box">
+                <strong>28%</strong>
+                <span class="muted">Ingin fitur filter & chat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DISCUSSION PAGE -->
+      <section id="discussionPage" class="hidden page">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="nav-btn" type="button" onclick="goBack()">
+              <span class="btn-icon">⬅️</span> Kembali
+            </button>
+            <button class="nav-btn" type="button" onclick="goHome()">
+              <span class="btn-icon">🏠</span> Home
+            </button>
+          </div>
+          <div class="topbar-right">
+            <button class="nav-btn" type="button" onclick="openSchedulePage()">
+              <span class="btn-icon">📅</span> Jadwal
+            </button>
+            <button class="nav-btn" type="button" onclick="openProfile()">
+              <span class="btn-icon">👤</span> Profil
+            </button>
+            <button class="nav-btn" type="button" onclick="logoutUser()">
+              <span class="btn-icon">🚪</span> Log Out
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card panel">
+            <div class="section-title-row">
+              <div>
+                <h2 style="margin-bottom:6px;">Ruang Diskusi</h2>
+                <div class="muted">Tambahkan pesan diskusi bersama teman belajar.</div>
+              </div>
+            </div>
+
+            <div class="chat-box" id="chatBox"></div>
+
+            <div class="input-group" style="margin-top:16px;">
+              <label>Nama Teman Diskusi</label>
+              <input id="discussionTarget" type="text" placeholder="Contoh: Nadia Putri" />
+            </div>
+
+            <div class="input-group">
+              <label>Pesan Diskusi</label>
+              <textarea id="discussionInput" placeholder="Tulis pesan diskusi di sini..."></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="dark-btn" type="button" style="width:auto;" onclick="addDiscussionMessage()">
+                <span class="btn-icon">💬</span> Kirim Diskusi
+              </button>
+              <button class="green-btn" type="button" style="width:auto;" onclick="openWhatsApp()">
+                <span class="btn-icon">📱</span> Lanjut ke WhatsApp
+              </button>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="section-title-row">
+              <div>
+                <h2 style="margin-bottom:6px;">Info Diskusi</h2>
+                <div class="muted">Gunakan fitur ini untuk koordinasi diskusi sebelum lanjut ke WhatsApp.</div>
+              </div>
+            </div>
+
+            <div class="list">
+              <div class="schedule-item">
+                <div>
+                  <strong>Diskusi Tugas Manajemen Inovasi</strong>
+                  <div class="muted" style="margin-top:6px;">Bisa dipakai untuk menyepakati topik, pembagian tugas, dan jadwal diskusi.</div>
+                </div>
+              </div>
+
+              <div class="schedule-item">
+                <div>
+                  <strong>Nomor WhatsApp Profil</strong>
+                  <div class="muted" style="margin-top:6px;">Nomor WA diambil dari halaman profil. Jadi sebelum tekan tombol WhatsApp, isi dulu nomor WA kamu.</div>
+                </div>
+              </div>
+
+              <div class="schedule-item">
+                <div>
+                  <strong>Jadwal Belajar</strong>
+                  <div class="muted" style="margin-top:6px;">Setelah diskusi, kamu bisa lanjut atur jadwal di menu Jadwal.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCHEDULE PAGE -->
+      <section id="schedulePage" class="hidden page">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="nav-btn" type="button" onclick="goBack()">
+              <span class="btn-icon">⬅️</span> Kembali
+            </button>
+            <button class="nav-btn" type="button" onclick="goHome()">
+              <span class="btn-icon">🏠</span> Home
+            </button>
+          </div>
+          <div class="topbar-right">
+            <button class="nav-btn" type="button" onclick="openDiscussion()">
+              <span class="btn-icon">💬</span> Diskusi
+            </button>
+            <button class="nav-btn" type="button" onclick="openProfile()">
+              <span class="btn-icon">👤</span> Profil
+            </button>
+            <button class="nav-btn" type="button" onclick="logoutUser()">
+              <span class="btn-icon">🚪</span> Log Out
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card panel">
+            <h2 style="margin-bottom:16px;">Tambah / Edit Jadwal</h2>
+
+            <input type="hidden" id="scheduleEditIndex" value="-1" />
+
+            <div class="input-group">
+              <label>Judul Kegiatan</label>
+              <input id="scheduleTitle" type="text" placeholder="Contoh: Diskusi Manajemen Inovasi" />
+            </div>
+
+            <div class="input-group">
+              <label>Tanggal</label>
+              <input id="scheduleDate" type="date" />
+            </div>
+
+            <div class="input-group">
+              <label>Jam</label>
+              <input id="scheduleTime" type="time" />
+            </div>
+
+            <div class="input-group">
+              <label>Tempat / Media</label>
+              <input id="schedulePlace" type="text" placeholder="Contoh: Perpustakaan / Google Meet / WhatsApp" />
+            </div>
+
+            <div class="input-group">
+              <label>Catatan</label>
+              <textarea id="scheduleNote" placeholder="Contoh: Bahas pembagian tugas dan materi presentasi"></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="dark-btn" type="button" style="width:auto;" onclick="saveSchedule()">
+                <span class="btn-icon">💾</span> Simpan Jadwal
+              </button>
+              <button class="outline-btn" type="button" style="width:auto;" onclick="resetScheduleForm()">
+                <span class="btn-icon">🧹</span> Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="section-title-row">
+              <div>
+                <h2 style="margin-bottom:6px;">Daftar Jadwal Belajar / Diskusi</h2>
+                <div class="muted">Jadwal bisa diedit atau dihapus.</div>
+              </div>
+            </div>
+
+            <div class="list" id="scheduleList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFILE PAGE -->
+      <section id="profilePage" class="hidden page">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="nav-btn" type="button" onclick="goBack()">
+              <span class="btn-icon">⬅️</span> Kembali
+            </button>
+            <button class="nav-btn" type="button" onclick="goHome()">
+              <span class="btn-icon">🏠</span> Home
+            </button>
+          </div>
+          <div class="topbar-right">
+            <button class="nav-btn" type="button" onclick="openDiscussion()">
+              <span class="btn-icon">💬</span> Diskusi
+            </button>
+            <button class="nav-btn" type="button" onclick="openSchedulePage()">
+              <span class="btn-icon">📅</span> Jadwal
+            </button>
+            <button class="nav-btn" type="button" onclick="logoutUser()">
+              <span class="btn-icon">🚪</span> Log Out
+            </button>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">PD</div>
+            <div>
+              <h2 id="profileTitle" style="margin-bottom:6px;">Profil Pengguna</h2>
+              <div class="muted">Data profil bisa diedit lalu disimpan.</div>
+            </div>
+          </div>
+
+          <div class="grid" style="grid-template-columns:1fr 1fr;">
+            <div>
+              <div class="input-group">
+                <label>Nama Lengkap</label>
+                <input id="profileName" type="text" />
+              </div>
+              <div class="input-group">
+                <label>Fakultas</label>
+                <select id="profileFaculty"></select>
+              </div>
+              <div class="input-group">
+                <label>Jurusan</label>
+                <select id="profileMajor"></select>
+              </div>
+            </div>
+
+            <div>
+              <div class="input-group">
+                <label>Semester</label>
+                <select id="profileSemester">
+                  <option>Semester 1</option>
+                  <option>Semester 2</option>
+                  <option>Semester 3</option>
+                  <option>Semester 4</option>
+                  <option>Semester 5</option>
+                  <option>Semester 6</option>
+                  <option>Semester 7</option>
+                  <option>Semester 8</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>Email</label>
+                <input id="profileEmail" type="email" />
+              </div>
+              <div class="input-group">
+                <label>Nomor WhatsApp</label>
+                <input id="profileWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
+              </div>
+              <div class="input-group">
+                <label>Bio Singkat</label>
+                <textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus di tugas dan diskusi."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+            <button class="dark-btn" type="button" style="width:auto;" onclick="saveProfile()">
+              <span class="btn-icon">💾</span> Simpan Perubahan
+            </button>
+            <button class="outline-btn" type="button" style="width:auto;" onclick="goHome()">
+              <span class="btn-icon">↩️</span> Kembali ke Home
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    const facultyMajors = {
+      'Fakultas Ilmu Pendidikan (FIP)': [
+        'Administrasi Pendidikan',
+        'Bimbingan dan Konseling',
+        'Pendidikan Guru SD',
+        'Pendidikan Luar Biasa',
+        'Pendidikan Luar Sekolah',
+        'Pendidikan Anak Usia Dini',
+        'Teknologi Pendidikan'
+      ],
+      'Fakultas Sastra (FS)': [
+        'Pendidikan Bahasa Indonesia',
+        'Pendidikan Bahasa Inggris',
+        'Pendidikan Bahasa Arab',
+        'Pendidikan Seni Rupa',
+        'Pendidikan Seni Tari dan Musik',
+        'Sastra Indonesia',
+        'Sastra Inggris'
+      ],
+      'Fakultas Matematika dan IPA (FMIPA)': [
+        'Matematika',
+        'Fisika',
+        'Kimia',
+        'Biologi',
+        'Pendidikan Matematika',
+        'Pendidikan Fisika',
+        'Pendidikan Kimia',
+        'Pendidikan Biologi',
+        'Pendidikan IPA'
+      ],
+      'Fakultas Ekonomi dan Bisnis (FEB)': [
+        'Manajemen',
+        'Akuntansi',
+        'Ekonomi Pembangunan',
+        'Pendidikan Ekonomi',
+        'Bisnis Digital'
+      ],
+      'Fakultas Teknik (FT)': [
+        'Teknik Informatika',
+        'Teknik Elektro',
+        'Teknik Mesin',
+        'Teknik Sipil',
+        'Pendidikan Teknik Mesin',
+        'Pendidikan Teknik Otomotif',
+        'Arsitektur'
+      ],
+      'Fakultas Ilmu Keolahragaan (FIK)': [
+        'Pendidikan Jasmani Kesehatan dan Rekreasi',
+        'Ilmu Keolahragaan',
+        'Kepelatihan Olahraga'
+      ],
+      'Fakultas Ilmu Sosial (FIS)': [
+        'Pendidikan Sejarah',
+        'Pendidikan Geografi',
+        'Pendidikan Pancasila dan Kewarganegaraan',
+        'Sosiologi',
+        'Ilmu Komunikasi'
+      ],
+      'Fakultas Psikologi (FPsi)': ['Psikologi'],
+      'Fakultas Vokasi (FV)': [
+        'D4 Desain Mode',
+        'D4 Animasi',
+        'D4 Teknologi Rekayasa Manufaktur',
+        'D4 Pengelolaan Perhotelan'
+      ],
+      'Fakultas Kedokteran (FK)': ['Kedokteran', 'Farmasi', 'Ilmu Keperawatan'],
+      'Sekolah Pascasarjana': ['Magister Pendidikan', 'Magister Manajemen', 'Doktoral Pendidikan']
+    };
+
+    const STORAGE_USERS = 'studymatch_users';
+    const STORAGE_CURRENT = 'studymatch_current_user';
+
+    const firstNames = [
+      'Nadia','Raka','Dimas','Salsa','Aulia','Rina','Fajar','Rizky','Nabila','Tegar',
+      'Putri','Farhan','Rani','Adit','Dea','Bagas','Cindy','Reza','Sinta','Yoga',
+      'Naufal','Anisa','Fikri','Rafli','Sheila','Dian','Riko','Lutfi','Mira','Hana'
+    ];
+
+    const lastNames = [
+      'Putri','Maulana','Pratama','Aulia','Rahma','Saputra','Permata','Wijaya','Kusuma','Ramadhan',
+      'Mahardika','Lestari','Nugraha','Wibowo','Puspita','Firmansyah','Setiawan','Amanda','Hidayat','Salsabila'
+    ];
+
+    const appState = {
+      currentPage: 'login',
+      previousPage: 'login',
+      user: {
+        name: 'Pengguna Demo',
+        faculty: 'Fakultas Ekonomi dan Bisnis (FEB)',
+        major: 'Manajemen',
+        semester: 'Semester 4',
+        email: 'demo@studymatch.id',
+        whatsapp: '6281234567890',
+        bio: 'Suka belajar kelompok dan diskusi tugas.'
+      },
+      discussions: [
+        {
+          sender: 'Nadia Putri',
+          text: 'Halo, jadi diskusi tugasnya kapan ya?',
+          time: '09:10',
+          self: false
+        },
+        {
+          sender: 'Saya',
+          text: 'Bisa kita atur malam ini setelah jam 7.',
+          time: '09:12',
+          self: true
+        }
+      ],
+      schedules: [
+        {
+          title: 'Diskusi Manajemen Inovasi',
+          date: '2026-03-15',
+          time: '19:00',
+          place: 'Google Meet',
+          note: 'Bahas pembagian tugas presentasi'
+        },
+        {
+          title: 'Belajar Bareng Akuntansi',
+          date: '2026-03-17',
+          time: '16:00',
+          place: 'Perpustakaan',
+          note: 'Review materi dan latihan soal'
+        }
+      ]
+    };
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+    }
+
+    function getUsers() {
+      const raw = localStorage.getItem(STORAGE_USERS);
+      return raw ? JSON.parse(raw) : [];
+    }
+
+    function saveCurrentUser(user) {
+      localStorage.setItem(STORAGE_CURRENT, JSON.stringify(user));
+    }
+
+    function getCurrentUser() {
+      const raw = localStorage.getItem(STORAGE_CURRENT);
+      return raw ? JSON.parse(raw) : null;
+    }
+
+    function clearCurrentUser() {
+      localStorage.removeItem(STORAGE_CURRENT);
+    }
+
+    function makeDummyUsers() {
+      const users = [];
+      let index = 0;
+
+      Object.entries(facultyMajors).forEach(([faculty, majors]) => {
+        majors.forEach((major) => {
+          for (let i = 0; i < 2; i++) {
+            const first = firstNames[index % firstNames.length];
+            const last = lastNames[index % lastNames.length];
+            const name = `${first} ${last}`;
+            const emailBase = `${first}.${last}.${major}`.toLowerCase()
+              .replace(/\s+/g, '')
+              .replace(/[^a-z0-9.]/g, '');
+            const email = `${emailBase}${i + 1}@studymatch.id`;
+
+            users.push({
+              name,
+              faculty,
+              major,
+              semester: `Semester ${((index % 8) + 1)}`,
+              email,
+              password: '12345678',
+              whatsapp: `62812${String(1000000 + index).padStart(7, '0')}`,
+              bio: `Mahasiswa ${major} yang suka diskusi dan belajar bareng.`,
+              isSeeded: true
+            });
+
+            index++;
+          }
+        });
+      });
+
+      return users;
+    }
+
+    function bootstrapUsers() {
+      const existing = getUsers();
+      if (!existing.length) {
+        const seeded = makeDummyUsers();
+        saveUsers(seeded);
+      }
+    }
+
+    function initials(name) {
+      return name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    }
+
+    function switchAuthTab(tab) {
+      document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+      document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+      document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+    }
+
+    function setPage(page) {
+      if (appState.currentPage !== page) appState.previousPage = appState.currentPage;
+      appState.currentPage = page;
+
+      ['loginPage','homePage','profilePage','discussionPage','schedulePage'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const pageEl = document.getElementById(page + 'Page');
+      if (pageEl) pageEl.classList.remove('hidden');
+    }
+
+    function syncUserToHome() {
+      const homeUserName = document.getElementById('homeUserName');
+      if (homeUserName) homeUserName.textContent = appState.user.name;
+      fillProfileForm();
+    }
+
+    function goHome() {
+      syncUserToHome();
+      setPage('home');
+    }
+
+    function goBack() {
+      if (
+        appState.currentPage === 'profile' ||
+        appState.currentPage === 'discussion' ||
+        appState.currentPage === 'schedule'
+      ) {
+        goHome();
+        return;
+      }
+
+      if (appState.currentPage === 'home') {
+        setPage('login');
+        return;
+      }
+
+      setPage('login');
+    }
+
+    function openProfile() {
+      fillProfileForm();
+      setPage('profile');
+    }
+
+    function openDiscussion() {
+      renderDiscussion();
+      setPage('discussion');
+    }
+
+    function openSchedulePage() {
+      renderSchedules();
+      setPage('schedule');
+    }
+
+    function openGoogleLogin() {
+      window.open('https://accounts.google.com/', '_blank');
+      alert('Untuk demo lokal di VS Code, tombol ini membuka halaman login Google asli. Kalau ingin login Google benar-benar masuk kembali ke aplikasi, perlu Firebase atau Google OAuth.');
+    }
+
+    function loginManual() {
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!email || !password) {
+        alert('Isi email dan password dulu.');
+        return;
+      }
+
+      const users = getUsers();
+      const found = users.find(user => user.email.toLowerCase() === email && user.password === password);
+
+      if (!found) {
+        alert('Akun tidak ditemukan atau password salah. Kalau belum punya akun, silakan daftar dulu.');
+        return;
+      }
+
+      appState.user = {
+        name: found.name,
+        faculty: found.faculty,
+        major: found.major,
+        semester: found.semester,
+        email: found.email,
+        whatsapp: found.whatsapp || '',
+        bio: found.bio || ''
+      };
+
+      saveCurrentUser(found);
+      syncUserToHome();
+      setPage('home');
+    }
+
+    function registerManual() {
+      const name = document.getElementById('registerName').value.trim();
+      const faculty = document.getElementById('registerFaculty').value;
+      const major = document.getElementById('registerMajor').value;
+      const semester = document.getElementById('registerSemester').value;
+      const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+      const password = document.getElementById('registerPassword').value.trim();
+
+      if (!name || !faculty || !major || !semester || !email || !password) {
+        alert('Lengkapi semua data pendaftaran.');
+        return;
+      }
+
+      if (password.length < 8) {
+        alert('Password minimal 8 karakter.');
+        return;
+      }
+
+      const users = getUsers();
+      const emailExists = users.some(user => user.email.toLowerCase() === email);
+
+      if (emailExists) {
+        alert('Email sudah terdaftar. Silakan login pakai akun itu.');
+        return;
+      }
+
+      const newUser = {
+        name,
+        faculty,
+        major,
+        semester,
+        email,
+        password,
+        whatsapp: '',
+        bio: ''
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+      saveCurrentUser(newUser);
+
+      appState.user = {
+        name,
+        faculty,
+        major,
+        semester,
+        email,
+        whatsapp: '',
+        bio: ''
+      };
+
+      syncUserToHome();
+      setPage('home');
+      alert('Akun berhasil dibuat. Sekarang kamu sudah masuk ke aplikasi.');
+    }
+
+    function logoutUser() {
+      clearCurrentUser();
+      setPage('login');
+      switchAuthTab('login');
+    }
+
+    function populateFacultyOptions(selectId, includeAll = false) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+
+      const faculties = Object.keys(facultyMajors);
+
+      select.innerHTML = includeAll
+        ? '<option value="all">Semua Fakultas</option>'
+        : '<option value="">Pilih Fakultas</option>';
+
+      faculties.forEach(f => {
+        const option = document.createElement('option');
+        option.value = f;
+        option.textContent = f;
+        select.appendChild(option);
+      });
+    }
+
+    function populateMajorOptions(faculty, selectId, includeAll = false) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+
+      select.innerHTML = includeAll
+        ? '<option value="all">Semua Jurusan</option>'
+        : '<option value="">Pilih Jurusan</option>';
+
+      if (!faculty || faculty === 'all') {
+        if (includeAll) {
+          const allMajors = [...new Set(Object.values(facultyMajors).flat())];
+          allMajors.forEach(m => {
+            const option = document.createElement('option');
+            option.value = m;
+            option.textContent = m;
+            select.appendChild(option);
+          });
+        }
+        return;
+      }
+
+      facultyMajors[faculty].forEach(m => {
+        const option = document.createElement('option');
+        option.value = m;
+        option.textContent = m;
+        select.appendChild(option);
+      });
+    }
+
+    function fillProfileForm() {
+      document.getElementById('profileTitle').textContent = appState.user.name;
+      document.getElementById('profileAvatar').textContent = initials(appState.user.name);
+      document.getElementById('profileName').value = appState.user.name || '';
+      document.getElementById('profileEmail').value = appState.user.email || '';
+      document.getElementById('profileWhatsapp').value = appState.user.whatsapp || '';
+      document.getElementById('profileBio').value = appState.user.bio || '';
+      document.getElementById('profileFaculty').value = appState.user.faculty || '';
+      populateMajorOptions(appState.user.faculty, 'profileMajor');
+      document.getElementById('profileMajor').value = appState.user.major || '';
+      document.getElementById('profileSemester').value = appState.user.semester || 'Semester 1';
+    }
+
+    function saveProfile() {
+      const oldEmail = appState.user.email.toLowerCase();
+      const name = document.getElementById('profileName').value.trim();
+      const faculty = document.getElementById('profileFaculty').value;
+      const major = document.getElementById('profileMajor').value;
+      const semester = document.getElementById('profileSemester').value;
+      const email = document.getElementById('profileEmail').value.trim().toLowerCase();
+      const whatsapp = document.getElementById('profileWhatsapp').value.trim();
+      const bio = document.getElementById('profileBio').value.trim();
+
+      if (!name || !faculty || !major || !semester || !email) {
+        alert('Lengkapi data profil terlebih dulu.');
+        return;
+      }
+
+      const users = getUsers();
+      const duplicateEmail = users.some(user => user.email.toLowerCase() === email && user.email.toLowerCase() !== oldEmail);
+
+      if (duplicateEmail) {
+        alert('Email itu sudah dipakai akun lain.');
+        return;
+      }
+
+      appState.user = { ...appState.user, name, faculty, major, semester, email, whatsapp, bio };
+
+      const index = users.findIndex(user => user.email.toLowerCase() === oldEmail);
+      if (index >= 0) {
+        users[index] = {
+          ...users[index],
+          name,
+          faculty,
+          major,
+          semester,
+          email,
+          whatsapp,
+          bio
+        };
+        saveUsers(users);
+        saveCurrentUser(users[index]);
+      }
+
+      syncUserToHome();
+      alert('Profil berhasil diperbarui.');
+      goHome();
+    }
+
+    function getVisibleStudents() {
+      const users = getUsers();
+      return users
+        .filter(user => user.email.toLowerCase() !== appState.user.email.toLowerCase())
+        .map((user, idx) => ({
+          name: user.name,
+          faculty: user.faculty,
+          major: user.major,
+          semester: user.semester,
+          whatsapp: user.whatsapp || '',
+          match: 80 + (idx % 20)
+        }));
+    }
+
+    function renderStudents(list) {
+      const el = document.getElementById('studentList');
+      document.getElementById('resultCount').textContent = `${list.length} hasil`;
+
+      if (!list.length) {
+        el.innerHTML = '<div class="muted">Tidak ada rekomendasi yang cocok.</div>';
+        return;
+      }
+
+      el.innerHTML = list.map(student => `
+        <div class="student-item">
+          <div class="student-meta">
+            <div class="avatar">${initials(student.name)}</div>
+            <div>
+              <div style="font-weight:700;">${student.name}</div>
+              <div class="chips">
+                <span class="chip">${student.faculty.replace(/\\s*\\(.+?\\)/, '')}</span>
+                <span class="chip">${student.major}</span>
+                <span class="chip">${student.semester}</span>
+              </div>
+              <div class="match">${student.match}% cocok</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${student.name.replace(/'/g, "\\'")}')">
+              <span class="btn-icon">💬</span> Diskusi
+            </button>
+            <button class="green-btn" type="button" style="width:auto;" onclick="startWhatsAppWith('${student.name.replace(/'/g, "\\'")}')">
+              <span class="btn-icon">📱</span> WhatsApp
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterStudents() {
+      const faculty = document.getElementById('filterFaculty').value;
+      const major = document.getElementById('filterMajor').value;
+
+      const filtered = getVisibleStudents().filter(s =>
+        (faculty === 'all' || s.faculty === faculty) &&
+        (major === 'all' || s.major === major)
+      );
+
+      renderStudents(filtered);
+    }
+
+    function getCurrentTimeString() {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      return `${hh}:${mm}`;
+    }
+
+    function renderDiscussion() {
+      const chatBox = document.getElementById('chatBox');
+      if (!appState.discussions.length) {
+        chatBox.innerHTML = '<div class="muted">Belum ada diskusi.</div>';
+        return;
+      }
+
+      chatBox.innerHTML = appState.discussions.map(msg => `
+        <div class="message ${msg.self ? 'self' : 'other'}">
+          <div class="bubble">${msg.text}</div>
+          <div class="message-meta">${msg.sender} • ${msg.time}</div>
+        </div>
+      `).join('');
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addDiscussionMessage() {
+      const target = document.getElementById('discussionTarget').value.trim() || 'Teman Diskusi';
+      const text = document.getElementById('discussionInput').value.trim();
+
+      if (!text) {
+        alert('Isi pesan diskusi dulu.');
+        return;
+      }
+
+      appState.discussions.push({
+        sender: 'Saya',
+        text,
+        time: getCurrentTimeString(),
+        self: true
+      });
+
+      appState.discussions.push({
+        sender: target,
+        text: 'Siap, nanti kita lanjut bahas ya.',
+        time: getCurrentTimeString(),
+        self: false
+      });
+
+      document.getElementById('discussionInput').value = '';
+      renderDiscussion();
+    }
+
+    function openWhatsApp() {
+      const target = document.getElementById('discussionTarget').value.trim() || 'teman diskusi';
+      const wa = (appState.user.whatsapp || '').replace(/[^0-9]/g, '');
+
+      if (!wa) {
+        alert('Isi nomor WhatsApp di halaman profil dulu.');
+        return;
+      }
+
+      const text = encodeURIComponent(`Halo ${target}, ayo lanjut diskusi lewat WhatsApp dari aplikasi StudyMatch.`);
+      window.open(`https://wa.me/${wa}?text=${text}`, '_blank');
+    }
+
+    function startDiscussionWith(name) {
+      openDiscussion();
+      document.getElementById('discussionTarget').value = name;
+      document.getElementById('discussionInput').focus();
+    }
+
+    function startWhatsAppWith(name) {
+      const wa = (appState.user.whatsapp || '').replace(/[^0-9]/g, '');
+
+      if (!wa) {
+        alert('Isi nomor WhatsApp di halaman profil dulu.');
+        return;
+      }
+
+      const text = encodeURIComponent(`Halo ${name}, aku mau ngajak diskusi belajar bareng dari aplikasi StudyMatch.`);
+      window.open(`https://wa.me/${wa}?text=${text}`, '_blank');
+    }
+
+    function renderSchedules() {
+      const list = document.getElementById('scheduleList');
+
+      if (!appState.schedules.length) {
+        list.innerHTML = '<div class="muted">Belum ada jadwal belajar atau diskusi.</div>';
+        return;
+      }
+
+      list.innerHTML = appState.schedules.map((item, index) => `
+        <div class="schedule-item">
+          <div>
+            <strong>${item.title}</strong>
+            <div class="chips">
+              <span class="chip">📅 ${item.date}</span>
+              <span class="chip">⏰ ${item.time}</span>
+              <span class="chip">📍 ${item.place}</span>
+            </div>
+            <div class="muted" style="margin-top:10px;">${item.note || '-'}</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="soft-btn" type="button" style="width:auto;" onclick="editSchedule(${index})">
+              <span class="btn-icon">✏️</span> Edit
+            </button>
+            <button class="danger-btn" type="button" style="width:auto;" onclick="deleteSchedule(${index})">
+              <span class="btn-icon">🗑️</span> Hapus
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function saveSchedule() {
+      const title = document.getElementById('scheduleTitle').value.trim();
+      const date = document.getElementById('scheduleDate').value;
+      const time = document.getElementById('scheduleTime').value;
+      const place = document.getElementById('schedulePlace').value.trim();
+      const note = document.getElementById('scheduleNote').value.trim();
+      const editIndex = Number(document.getElementById('scheduleEditIndex').value);
+
+      if (!title || !date || !time || !place) {
+        alert('Lengkapi judul, tanggal, jam, dan tempat/media.');
+        return;
+      }
+
+      const data = { title, date, time, place, note };
+
+      if (editIndex >= 0) {
+        appState.schedules[editIndex] = data;
+      } else {
+        appState.schedules.push(data);
+      }
+
+      resetScheduleForm();
+      renderSchedules();
+    }
+
+    function editSchedule(index) {
+      const item = appState.schedules[index];
+      document.getElementById('scheduleTitle').value = item.title;
+      document.getElementById('scheduleDate').value = item.date;
+      document.getElementById('scheduleTime').value = item.time;
+      document.getElementById('schedulePlace').value = item.place;
+      document.getElementById('scheduleNote').value = item.note;
+      document.getElementById('scheduleEditIndex').value = index;
+    }
+
+    function deleteSchedule(index) {
+      appState.schedules.splice(index, 1);
+      renderSchedules();
+      resetScheduleForm();
+    }
+
+    function resetScheduleForm() {
+      document.getElementById('scheduleTitle').value = '';
+      document.getElementById('scheduleDate').value = '';
+      document.getElementById('scheduleTime').value = '';
+      document.getElementById('schedulePlace').value = '';
+      document.getElementById('scheduleNote').value = '';
+      document.getElementById('scheduleEditIndex').value = -1;
+    }
+
+    function restoreSession() {
+      const current = getCurrentUser();
+      if (current) {
+        appState.user = {
+          name: current.name,
+          faculty: current.faculty,
+          major: current.major,
+          semester: current.semester,
+          email: current.email,
+          whatsapp: current.whatsapp || '',
+          bio: current.bio || ''
+        };
+        syncUserToHome();
+        setPage('home');
+        return true;
+      }
+      return false;
+    }
+
+    function init() {
+      bootstrapUsers();
+
+      populateFacultyOptions('registerFaculty');
+      populateFacultyOptions('filterFaculty', true);
+      populateFacultyOptions('profileFaculty');
+      populateMajorOptions('', 'registerMajor');
+      populateMajorOptions('all', 'filterMajor', true);
+      populateMajorOptions(appState.user.faculty, 'profileMajor');
+
+      document.getElementById('registerFaculty').addEventListener('change', e => {
+        populateMajorOptions(e.target.value, 'registerMajor');
+      });
+
+      document.getElementById('filterFaculty').addEventListener('change', e => {
+        populateMajorOptions(e.target.value, 'filterMajor', true);
+      });
+
+      document.getElementById('profileFaculty').addEventListener('change', e => {
+        populateMajorOptions(e.target.value, 'profileMajor');
+      });
+
+      fillProfileForm();
+      renderStudents(getVisibleStudents());
+      renderDiscussion();
+      renderSchedules();
+
+      const loggedIn = restoreSession();
+      if (!loggedIn) setPage('login');
+    }
+
+    init();
+  </script>
+</body>
+</html>
