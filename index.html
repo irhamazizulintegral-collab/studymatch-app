@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StudyMatch App</title>
+  <title>StudyMatch App - Universitas Negeri Malang</title>
   <style>
     * { box-sizing: border-box; }
 
@@ -33,15 +33,8 @@
       overflow-x: hidden;
     }
 
-    .app {
-      min-height: 100vh;
-      padding: 24px;
-    }
-
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-    }
+    .app { min-height: 100vh; padding: 24px; }
+    .container { max-width: 1180px; margin: 0 auto; }
 
     .card {
       background: var(--card);
@@ -69,10 +62,7 @@
       50% { box-shadow: 0 0 30px rgba(79,70,229,0.18); }
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes fadeOverlay {
       from { opacity: 1; visibility: visible; }
       to { opacity: 0; visibility: hidden; }
@@ -91,9 +81,7 @@
       gap: 18px;
     }
 
-    .loading-screen.hide {
-      animation: fadeOverlay 0.7s ease forwards;
-    }
+    .loading-screen.hide { animation: fadeOverlay 0.7s ease forwards; }
 
     .loading-logo {
       width: 82px;
@@ -117,11 +105,7 @@
       animation: spin 0.8s linear infinite;
     }
 
-    .loading-text {
-      font-size: 15px;
-      opacity: 0.9;
-      letter-spacing: 0.3px;
-    }
+    .loading-text { font-size: 15px; opacity: 0.9; letter-spacing: 0.3px; }
 
     .split {
       display: grid;
@@ -169,11 +153,7 @@
       animation: floatSoft 7s ease-in-out infinite reverse;
     }
 
-    .hero-inner,
-    .hero-bottom {
-      position: relative;
-      z-index: 1;
-    }
+    .hero-inner, .hero-bottom { position: relative; z-index: 1; }
 
     .badge {
       display: inline-flex;
@@ -216,29 +196,10 @@
       backdrop-filter: blur(8px);
     }
 
-    .promo-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .promo-text {
-      color: rgba(255,255,255,0.86);
-      line-height: 1.8;
-      font-size: 15px;
-      margin-bottom: 0;
-    }
-
-    .promo-list {
-      margin: 14px 0 0;
-      padding-left: 18px;
-      color: rgba(255,255,255,0.92);
-    }
-
-    .promo-list li {
-      margin-bottom: 8px;
-      line-height: 1.7;
-    }
+    .promo-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+    .promo-text { color: rgba(255,255,255,0.86); line-height: 1.8; font-size: 15px; margin-bottom: 0; }
+    .promo-list { margin: 14px 0 0; padding-left: 18px; color: rgba(255,255,255,0.92); }
+    .promo-list li { margin-bottom: 8px; line-height: 1.7; }
 
     .hero-stats {
       display: grid;
@@ -255,17 +216,8 @@
       border: 1px solid rgba(255,255,255,0.16);
     }
 
-    .hero-stat strong {
-      display: block;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .hero-stat span {
-      font-size: 14px;
-      color: rgba(255,255,255,0.82);
-      line-height: 1.6;
-    }
+    .hero-stat strong { display: block; font-size: 24px; margin-bottom: 10px; }
+    .hero-stat span { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.6; }
 
     .feature-box {
       background: rgba(255,255,255,0.10);
@@ -303,12 +255,7 @@
     }
 
     .auth-header { margin-bottom: 18px; }
-
-    .auth-subtitle {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
+    .auth-subtitle { color: var(--muted); line-height: 1.7; font-size: 14px; }
 
     .tabs {
       display: flex;
@@ -382,10 +329,7 @@
       box-shadow: 0 12px 24px rgba(17,24,39,0.18);
     }
 
-    .soft-btn {
-      background: #eef2ff;
-      color: #4338ca;
-    }
+    .soft-btn { background: #eef2ff; color: #4338ca; }
 
     .outline-btn, .nav-btn {
       background: white;
@@ -406,22 +350,9 @@
       box-shadow: 0 12px 24px rgba(236,72,153,0.22);
     }
 
-    .danger-btn {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .btn-icon {
-      font-size: 14px;
-      line-height: 1;
-    }
-
-    .btn-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .danger-btn { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .btn-icon { font-size: 14px; line-height: 1; }
+    .btn-label { display: inline-flex; align-items: center; gap: 8px; }
 
     .btn-loader {
       width: 16px;
@@ -433,13 +364,8 @@
       display: none;
     }
 
-    .btn-loading .btn-loader {
-      display: inline-block;
-    }
-
-    .btn-loading .btn-label {
-      opacity: 0.9;
-    }
+    .btn-loading .btn-loader { display: inline-block; }
+    .btn-loading .btn-label { opacity: 0.9; }
 
     .divider {
       text-align: center;
@@ -539,42 +465,14 @@
       background: rgba(255,255,255,0.10);
     }
 
-    .brand-box p {
-      color: rgba(255,255,255,0.84);
-      position: relative;
-      z-index: 1;
-    }
+    .brand-box p, .brand-box .badge, .brand-box h1 { position: relative; z-index: 1; }
+    .brand-box p { color: rgba(255,255,255,0.84); }
 
-    .brand-box .badge,
-    .brand-box h1 {
-      position: relative;
-      z-index: 1;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 20px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .grid-home-main {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 20px;
-    }
-
+    .grid { display: grid; grid-template-columns: 340px 1fr; gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-home-main { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; }
     .panel { padding: 22px; }
-
-    .list {
-      display: grid;
-      gap: 14px;
-    }
+    .list { display: grid; gap: 14px; }
 
     .student-item, .schedule-item, .friend-item {
       padding: 18px;
@@ -594,11 +492,7 @@
       box-shadow: 0 14px 28px rgba(17,24,39,0.08);
     }
 
-    .student-meta {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .student-meta { display: flex; align-items: center; gap: 14px; }
 
     .avatar {
       width: 54px;
@@ -614,10 +508,7 @@
       box-shadow: 0 10px 20px rgba(79,70,229,0.18);
     }
 
-    .muted {
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .muted { color: var(--muted); font-size: 14px; }
 
     .match {
       padding: 8px 12px;
@@ -630,20 +521,8 @@
       margin-top: 8px;
     }
 
-    .chips {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .chip {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f3f4f6;
-      font-size: 12px;
-      color: #374151;
-    }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .chip { padding: 6px 10px; border-radius: 999px; background: #f3f4f6; font-size: 12px; color: #374151; }
 
     .profile-header {
       display: flex;
@@ -668,28 +547,10 @@
       box-shadow: 0 12px 22px rgba(67,56,202,0.18);
     }
 
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .stat-box {
-      padding: 16px;
-      border-radius: 18px;
-      background: #f8fafc;
-      border: 1px solid #eef2f7;
-      transition: 0.2s ease;
-    }
-
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+    .stat-box { padding: 16px; border-radius: 18px; background: #f8fafc; border: 1px solid #eef2f7; transition: 0.2s ease; }
     .stat-box:hover { transform: translateY(-3px); }
-
-    .stat-box strong {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 4px;
-    }
+    .stat-box strong { display: block; font-size: 22px; margin-bottom: 4px; }
 
     .chat-box {
       border: 1px solid #e5e7eb;
@@ -701,13 +562,7 @@
       overflow-y: auto;
     }
 
-    .message {
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
+    .message { margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
     .message.self { align-items: flex-end; }
     .message.other { align-items: flex-start; }
 
@@ -717,6 +572,7 @@
       border-radius: 16px;
       font-size: 14px;
       line-height: 1.5;
+      word-break: break-word;
     }
 
     .message.self .bubble {
@@ -732,11 +588,7 @@
       border-bottom-left-radius: 6px;
     }
 
-    .message-meta {
-      font-size: 11px;
-      color: #6b7280;
-      padding: 0 4px;
-    }
+    .message-meta { font-size: 11px; color: #6b7280; padding: 0 4px; }
 
     .section-title-row {
       display: flex;
@@ -757,40 +609,17 @@
     }
 
     @media (max-width: 1080px) {
-      .grid-home-main {
-        grid-template-columns: 1fr;
-      }
+      .grid-home-main { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 920px) {
-      .split, .grid, .stat-row, .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .login-hero {
-        padding: 30px;
-      }
-
-      .login-hero, .auth-panel {
-        min-height: auto;
-      }
-
-      .student-item, .schedule-item, .friend-item {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .hero-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-title {
-        font-size: 34px;
-      }
-
-      .hero-text {
-        font-size: 15px;
-      }
+      .split, .grid, .stat-row, .grid-2 { grid-template-columns: 1fr; }
+      .login-hero { padding: 30px; }
+      .login-hero, .auth-panel { min-height: auto; }
+      .student-item, .schedule-item, .friend-item { align-items: flex-start; flex-direction: column; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .hero-title { font-size: 34px; }
+      .hero-text { font-size: 15px; }
     }
   </style>
 </head>
@@ -798,64 +627,44 @@
   <div id="loadingScreen" class="loading-screen">
     <div class="loading-logo">📘</div>
     <div class="loading-spinner"></div>
-    <div class="loading-text">Memuat StudyMatch...</div>
+    <div class="loading-text">Memuat StudyMatch UM...</div>
   </div>
 
   <div class="app">
     <div class="container">
-
-      <!-- LOGIN PAGE -->
       <section id="loginPage" class="split page">
         <div class="login-hero card">
           <div class="hero-inner">
-            <div class="badge">✨ Dashboard Login • StudyMatch</div>
-
-            <h1 class="hero-title">
-              Masuk dulu, lalu temukan partner belajar yang paling cocok.
-            </h1>
-
+            <div class="badge">✨ Dashboard Login • StudyMatch UM</div>
+            <h1 class="hero-title">Masuk dulu, lalu temukan partner belajar yang paling cocok.</h1>
             <p class="hero-text">
-              StudyMatch membantu mahasiswa menemukan teman belajar berdasarkan fakultas, jurusan, dan semester.
-              Sekarang juga dilengkapi ruang diskusi dan jadwal belajar bersama agar proses belajar lebih terarah,
-              kolaboratif, dan fleksibel.
+              StudyMatch membantu mahasiswa Universitas Negeri Malang menemukan teman belajar berdasarkan fakultas, jurusan, dan semester.
+              Sekarang juga dilengkapi ruang diskusi dan jadwal belajar bersama agar proses belajar lebih terarah, kolaboratif, dan fleksibel.
             </p>
-
             <div class="promo-box">
               <div class="promo-title">Kenapa pakai StudyMatch?</div>
               <p class="promo-text">
-                Aplikasi ini dirancang untuk menjawab masalah mahasiswa yang sering kesulitan mencari partner belajar
-                yang cocok, aktif, dan punya jadwal yang sesuai.
+                Aplikasi ini dirancang untuk menjawab masalah mahasiswa yang sering kesulitan mencari partner belajar yang cocok, aktif, dan punya jadwal yang sesuai.
               </p>
               <ul class="promo-list">
-                <li>Mempermudah cari teman belajar berdasarkan fakultas dan jurusan</li>
+                <li>Mempermudah pencarian teman belajar berdasarkan fakultas dan jurusan</li>
                 <li>Mendukung diskusi langsung di aplikasi atau lanjut ke WhatsApp</li>
                 <li>Membantu menyusun jadwal belajar bersama yang lebih teratur</li>
               </ul>
             </div>
-
             <div class="hero-stats">
-              <div class="hero-stat">
-                <strong>71%</strong>
-                <span>Tertarik memakai aplikasi</span>
-              </div>
-              <div class="hero-stat">
-                <strong>89%</strong>
-                <span>Sering belajar sendiri</span>
-              </div>
-              <div class="hero-stat">
-                <strong>28%</strong>
-                <span>Menginginkan fitur filter</span>
-              </div>
+              <div class="hero-stat"><strong>71%</strong><span>Tertarik memakai aplikasi</span></div>
+              <div class="hero-stat"><strong>89%</strong><span>Sering belajar sendiri</span></div>
+              <div class="hero-stat"><strong>28%</strong><span>Menginginkan fitur filter</span></div>
             </div>
           </div>
-
           <div class="hero-bottom">
             <div class="feature-box">
-              <div class="feature-item"><span class="feature-dot"></span> Login akun mahasiswa dan registrasi user baru</div>
+              <div class="feature-item"><span class="feature-dot"></span> Login akun mahasiswa dan registrasi pengguna baru</div>
               <div class="feature-item"><span class="feature-dot"></span> Pencarian partner belajar yang lebih relevan</div>
               <div class="feature-item"><span class="feature-dot"></span> Tambah teman lalu pilih diskusi dengan siapa</div>
               <div class="feature-item"><span class="feature-dot"></span> Diskusi langsung di aplikasi dan integrasi WhatsApp</div>
-              <div class="feature-item"><span class="feature-dot"></span> Pengelolaan jadwal belajar / diskusi secara fleksibel</div>
+              <div class="feature-item"><span class="feature-dot"></span> Pengelolaan jadwal belajar atau diskusi secara fleksibel</div>
             </div>
           </div>
         </div>
@@ -867,12 +676,8 @@
           </div>
 
           <div class="tabs">
-            <button class="tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')">
-              <span class="btn-icon">🔐</span> Login
-            </button>
-            <button class="tab" id="tabRegister" type="button" onclick="switchAuthTab('register')">
-              <span class="btn-icon">📝</span> Daftar
-            </button>
+            <button class="tab active" id="tabLogin" type="button" onclick="switchAuthTab('login')"><span class="btn-icon">🔐</span> Login</button>
+            <button class="tab" id="tabRegister" type="button" onclick="switchAuthTab('register')"><span class="btn-icon">📝</span> Daftar</button>
           </div>
 
           <button class="google-btn" type="button" onclick="openGoogleLogin()">
@@ -881,14 +686,8 @@
           <div class="divider">atau lanjut pakai email</div>
 
           <div id="loginForm" class="auth-form-box">
-            <div class="input-group">
-              <label>Email</label>
-              <input id="loginEmail" type="email" value="demo@studymatch.id" />
-            </div>
-            <div class="input-group">
-              <label>Password</label>
-              <input id="loginPassword" type="password" value="12345678" />
-            </div>
+            <div class="input-group"><label>Email</label><input id="loginEmail" type="email" value="demo@studymatch.id" /></div>
+            <div class="input-group"><label>Password</label><input id="loginPassword" type="password" value="12345678" /></div>
             <button class="dark-btn" id="loginBtn" type="button" onclick="loginManual()">
               <span class="btn-label"><span class="btn-icon">➡️</span> Login</span>
               <span class="btn-loader"></span>
@@ -896,46 +695,20 @@
           </div>
 
           <div id="registerForm" class="auth-form-box hidden">
-            <div class="input-group">
-              <label>Nama Lengkap</label>
-              <input id="registerName" type="text" placeholder="Nama lengkap" />
-            </div>
-            <div class="input-group">
-              <label>Fakultas</label>
-              <select id="registerFaculty">
-                <option value="">Pilih Fakultas</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Jurusan</label>
-              <select id="registerMajor"></select>
-            </div>
+            <div class="input-group"><label>Nama Lengkap</label><input id="registerName" type="text" placeholder="Nama lengkap" /></div>
+            <div class="input-group"><label>Fakultas</label><select id="registerFaculty"><option value="">Pilih Fakultas</option></select></div>
+            <div class="input-group"><label>Jurusan</label><select id="registerMajor"></select></div>
             <div class="input-group">
               <label>Semester</label>
               <select id="registerSemester">
                 <option value="">Pilih Semester</option>
-                <option>Semester 1</option>
-                <option>Semester 2</option>
-                <option>Semester 3</option>
-                <option>Semester 4</option>
-                <option>Semester 5</option>
-                <option>Semester 6</option>
-                <option>Semester 7</option>
-                <option>Semester 8</option>
+                <option>Semester 1</option><option>Semester 2</option><option>Semester 3</option><option>Semester 4</option>
+                <option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option>
               </select>
             </div>
-            <div class="input-group">
-              <label>Nomor WhatsApp</label>
-              <input id="registerWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
-            </div>
-            <div class="input-group">
-              <label>Email</label>
-              <input id="registerEmail" type="email" placeholder="email@kampus.ac.id" />
-            </div>
-            <div class="input-group">
-              <label>Password</label>
-              <input id="registerPassword" type="password" placeholder="Minimal 8 karakter" />
-            </div>
+            <div class="input-group"><label>Nomor WhatsApp</label><input id="registerWhatsapp" type="text" placeholder="Contoh: 6281234567890" /></div>
+            <div class="input-group"><label>Email</label><input id="registerEmail" type="email" placeholder="email@kampus.ac.id" /></div>
+            <div class="input-group"><label>Password</label><input id="registerPassword" type="password" placeholder="Minimal 8 karakter" /></div>
             <button class="dark-btn" id="registerBtn" type="button" onclick="registerManual()">
               <span class="btn-label"><span class="btn-icon">✅</span> Daftar</span>
               <span class="btn-loader"></span>
@@ -948,37 +721,24 @@
         </div>
       </section>
 
-      <!-- HOME PAGE -->
       <section id="homePage" class="hidden page">
         <div class="topbar">
           <div class="topbar-left">
-            <button class="nav-btn" type="button" onclick="goBack()">
-              <span class="btn-icon">⬅️</span> Kembali
-            </button>
-            <button class="nav-btn" type="button" onclick="goHome()">
-              <span class="btn-icon">🏠</span> Home
-            </button>
+            <button class="nav-btn" type="button" onclick="goBack()"><span class="btn-icon">⬅️</span> Kembali</button>
+            <button class="nav-btn" type="button" onclick="goHome()"><span class="btn-icon">🏠</span> Home</button>
           </div>
           <div class="topbar-right">
-            <button class="nav-btn" type="button" onclick="openDiscussion()">
-              <span class="btn-icon">💬</span> Diskusi
-            </button>
-            <button class="nav-btn" type="button" onclick="openSchedulePage()">
-              <span class="btn-icon">📅</span> Jadwal
-            </button>
-            <button class="nav-btn" type="button" onclick="openProfile()">
-              <span class="btn-icon">👤</span> Profil
-            </button>
-            <button class="nav-btn" type="button" onclick="logoutUser()">
-              <span class="btn-icon">🚪</span> Log Out
-            </button>
+            <button class="nav-btn" type="button" onclick="openDiscussion()"><span class="btn-icon">💬</span> Diskusi</button>
+            <button class="nav-btn" type="button" onclick="openSchedulePage()"><span class="btn-icon">📅</span> Jadwal</button>
+            <button class="nav-btn" type="button" onclick="openProfile()"><span class="btn-icon">👤</span> Profil</button>
+            <button class="nav-btn" type="button" onclick="logoutUser()"><span class="btn-icon">🚪</span> Log Out</button>
           </div>
         </div>
 
         <div class="brand-box card">
           <div class="badge">🏠 Home Dashboard</div>
           <h1 style="font-size:34px; margin-top:14px; margin-bottom:10px;">Halo, <span id="homeUserName">Pengguna</span> 👋</h1>
-          <p>Temukan partner belajar, tambahkan teman, lalu pilih siapa yang ingin diajak diskusi.</p>
+          <p>Temukan partner belajar, tambahkan teman, lalu pilih siapa yang ingin diajak berdiskusi.</p>
         </div>
 
         <div class="grid-home-main">
@@ -986,14 +746,8 @@
             <div class="grid">
               <div class="card panel">
                 <h3 style="margin-bottom:16px;">Filter Teman Belajar</h3>
-                <div class="input-group">
-                  <label>Fakultas</label>
-                  <select id="filterFaculty"></select>
-                </div>
-                <div class="input-group">
-                  <label>Jurusan</label>
-                  <select id="filterMajor"></select>
-                </div>
+                <div class="input-group"><label>Fakultas</label><select id="filterFaculty"></select></div>
+                <div class="input-group"><label>Jurusan</label><select id="filterMajor"></select></div>
                 <button class="dark-btn" type="button" onclick="filterStudents()">
                   <span class="btn-label"><span class="btn-icon">🔎</span> Tampilkan Rekomendasi</span>
                 </button>
@@ -1007,25 +761,15 @@
                   </div>
                   <div class="match" id="resultCount">0 hasil</div>
                 </div>
-
                 <div class="list" id="studentList"></div>
               </div>
             </div>
 
             <div class="card panel" style="margin-top:20px;">
               <div class="stat-row">
-                <div class="stat-box">
-                  <strong>71%</strong>
-                  <span class="muted">Tertarik memakai aplikasi</span>
-                </div>
-                <div class="stat-box">
-                  <strong>89%</strong>
-                  <span class="muted">Sering belajar sendiri</span>
-                </div>
-                <div class="stat-box">
-                  <strong>28%</strong>
-                  <span class="muted">Ingin fitur filter & chat</span>
-                </div>
+                <div class="stat-box"><strong>71%</strong><span class="muted">Tertarik memakai aplikasi</span></div>
+                <div class="stat-box"><strong>89%</strong><span class="muted">Sering belajar sendiri</span></div>
+                <div class="stat-box"><strong>28%</strong><span class="muted">Ingin fitur filter dan chat</span></div>
               </div>
             </div>
           </div>
@@ -1042,27 +786,16 @@
         </div>
       </section>
 
-      <!-- DISCUSSION PAGE -->
       <section id="discussionPage" class="hidden page">
         <div class="topbar">
           <div class="topbar-left">
-            <button class="nav-btn" type="button" onclick="goBack()">
-              <span class="btn-icon">⬅️</span> Kembali
-            </button>
-            <button class="nav-btn" type="button" onclick="goHome()">
-              <span class="btn-icon">🏠</span> Home
-            </button>
+            <button class="nav-btn" type="button" onclick="goBack()"><span class="btn-icon">⬅️</span> Kembali</button>
+            <button class="nav-btn" type="button" onclick="goHome()"><span class="btn-icon">🏠</span> Home</button>
           </div>
           <div class="topbar-right">
-            <button class="nav-btn" type="button" onclick="openSchedulePage()">
-              <span class="btn-icon">📅</span> Jadwal
-            </button>
-            <button class="nav-btn" type="button" onclick="openProfile()">
-              <span class="btn-icon">👤</span> Profil
-            </button>
-            <button class="nav-btn" type="button" onclick="logoutUser()">
-              <span class="btn-icon">🚪</span> Log Out
-            </button>
+            <button class="nav-btn" type="button" onclick="openSchedulePage()"><span class="btn-icon">📅</span> Jadwal</button>
+            <button class="nav-btn" type="button" onclick="openProfile()"><span class="btn-icon">👤</span> Profil</button>
+            <button class="nav-btn" type="button" onclick="logoutUser()"><span class="btn-icon">🚪</span> Log Out</button>
           </div>
         </div>
 
@@ -1076,29 +809,13 @@
             </div>
 
             <div class="chat-box" id="chatBox"></div>
-
-            <div class="input-group" style="margin-top:16px;">
-              <label>Pilih Teman Diskusi</label>
-              <select id="discussionFriendSelect"></select>
-            </div>
-
-            <div class="input-group">
-              <label>Nama Teman Diskusi</label>
-              <input id="discussionTarget" type="text" placeholder="Contoh: Nadia Putri" />
-            </div>
-
-            <div class="input-group">
-              <label>Pesan Diskusi</label>
-              <textarea id="discussionInput" placeholder="Tulis pesan diskusi di sini..."></textarea>
-            </div>
+            <div class="input-group" style="margin-top:16px;"><label>Pilih Teman Diskusi</label><select id="discussionFriendSelect"></select></div>
+            <div class="input-group"><label>Nama Teman Diskusi</label><input id="discussionTarget" type="text" placeholder="Contoh: Nadia Putri" /></div>
+            <div class="input-group"><label>Pesan Diskusi</label><textarea id="discussionInput" placeholder="Tulis pesan diskusi di sini..."></textarea></div>
 
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button class="dark-btn" type="button" style="width:auto;" onclick="addDiscussionMessage()">
-                <span class="btn-label"><span class="btn-icon">💬</span> Kirim Diskusi</span>
-              </button>
-              <button class="green-btn" type="button" style="width:auto;" onclick="openWhatsApp()">
-                <span class="btn-label"><span class="btn-icon">📱</span> Lanjut ke WhatsApp</span>
-              </button>
+              <button class="dark-btn" type="button" style="width:auto;" onclick="addDiscussionMessage()"><span class="btn-label"><span class="btn-icon">💬</span> Kirim Diskusi</span></button>
+              <button class="green-btn" type="button" style="width:auto;" onclick="openWhatsApp()"><span class="btn-label"><span class="btn-icon">📱</span> Lanjut ke WhatsApp</span></button>
             </div>
           </div>
 
@@ -1114,105 +831,56 @@
         </div>
       </section>
 
-      <!-- SCHEDULE PAGE -->
       <section id="schedulePage" class="hidden page">
         <div class="topbar">
           <div class="topbar-left">
-            <button class="nav-btn" type="button" onclick="goBack()">
-              <span class="btn-icon">⬅️</span> Kembali
-            </button>
-            <button class="nav-btn" type="button" onclick="goHome()">
-              <span class="btn-icon">🏠</span> Home
-            </button>
+            <button class="nav-btn" type="button" onclick="goBack()"><span class="btn-icon">⬅️</span> Kembali</button>
+            <button class="nav-btn" type="button" onclick="goHome()"><span class="btn-icon">🏠</span> Home</button>
           </div>
           <div class="topbar-right">
-            <button class="nav-btn" type="button" onclick="openDiscussion()">
-              <span class="btn-icon">💬</span> Diskusi
-            </button>
-            <button class="nav-btn" type="button" onclick="openProfile()">
-              <span class="btn-icon">👤</span> Profil
-            </button>
-            <button class="nav-btn" type="button" onclick="logoutUser()">
-              <span class="btn-icon">🚪</span> Log Out
-            </button>
+            <button class="nav-btn" type="button" onclick="openDiscussion()"><span class="btn-icon">💬</span> Diskusi</button>
+            <button class="nav-btn" type="button" onclick="openProfile()"><span class="btn-icon">👤</span> Profil</button>
+            <button class="nav-btn" type="button" onclick="logoutUser()"><span class="btn-icon">🚪</span> Log Out</button>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="card panel">
-            <h2 style="margin-bottom:16px;">Tambah / Edit Jadwal</h2>
-
+            <h2 style="margin-bottom:16px;">Tambah atau Edit Jadwal</h2>
             <input type="hidden" id="scheduleEditIndex" value="-1" />
-
-            <div class="input-group">
-              <label>Judul Kegiatan</label>
-              <input id="scheduleTitle" type="text" placeholder="Contoh: Diskusi Manajemen Inovasi" />
-            </div>
-
-            <div class="input-group">
-              <label>Tanggal</label>
-              <input id="scheduleDate" type="date" />
-            </div>
-
-            <div class="input-group">
-              <label>Jam</label>
-              <input id="scheduleTime" type="time" />
-            </div>
-
-            <div class="input-group">
-              <label>Tempat / Media</label>
-              <input id="schedulePlace" type="text" placeholder="Contoh: Perpustakaan / Google Meet / WhatsApp" />
-            </div>
-
-            <div class="input-group">
-              <label>Catatan</label>
-              <textarea id="scheduleNote" placeholder="Contoh: Bahas pembagian tugas dan materi presentasi"></textarea>
-            </div>
-
+            <div class="input-group"><label>Judul Kegiatan</label><input id="scheduleTitle" type="text" placeholder="Contoh: Diskusi Manajemen Inovasi" /></div>
+            <div class="input-group"><label>Tanggal</label><input id="scheduleDate" type="date" /></div>
+            <div class="input-group"><label>Jam</label><input id="scheduleTime" type="time" /></div>
+            <div class="input-group"><label>Tempat atau Media</label><input id="schedulePlace" type="text" placeholder="Contoh: Perpustakaan / Google Meet / WhatsApp" /></div>
+            <div class="input-group"><label>Catatan</label><textarea id="scheduleNote" placeholder="Contoh: Bahas pembagian tugas dan materi presentasi"></textarea></div>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button class="dark-btn" type="button" style="width:auto;" onclick="saveSchedule()">
-                <span class="btn-label"><span class="btn-icon">💾</span> Simpan Jadwal</span>
-              </button>
-              <button class="outline-btn" type="button" style="width:auto;" onclick="resetScheduleForm()">
-                <span class="btn-label"><span class="btn-icon">🧹</span> Reset</span>
-              </button>
+              <button class="dark-btn" type="button" style="width:auto;" onclick="saveSchedule()"><span class="btn-label"><span class="btn-icon">💾</span> Simpan Jadwal</span></button>
+              <button class="outline-btn" type="button" style="width:auto;" onclick="resetScheduleForm()"><span class="btn-label"><span class="btn-icon">🧹</span> Reset</span></button>
             </div>
           </div>
 
           <div class="card panel">
             <div class="section-title-row">
               <div>
-                <h2 style="margin-bottom:6px;">Daftar Jadwal Belajar / Diskusi</h2>
+                <h2 style="margin-bottom:6px;">Daftar Jadwal Belajar atau Diskusi</h2>
                 <div class="muted">Jadwal bisa diedit atau dihapus.</div>
               </div>
             </div>
-
             <div class="list" id="scheduleList"></div>
           </div>
         </div>
       </section>
 
-      <!-- PROFILE PAGE -->
       <section id="profilePage" class="hidden page">
         <div class="topbar">
           <div class="topbar-left">
-            <button class="nav-btn" type="button" onclick="goBack()">
-              <span class="btn-icon">⬅️</span> Kembali
-            </button>
-            <button class="nav-btn" type="button" onclick="goHome()">
-              <span class="btn-icon">🏠</span> Home
-            </button>
+            <button class="nav-btn" type="button" onclick="goBack()"><span class="btn-icon">⬅️</span> Kembali</button>
+            <button class="nav-btn" type="button" onclick="goHome()"><span class="btn-icon">🏠</span> Home</button>
           </div>
           <div class="topbar-right">
-            <button class="nav-btn" type="button" onclick="openDiscussion()">
-              <span class="btn-icon">💬</span> Diskusi
-            </button>
-            <button class="nav-btn" type="button" onclick="openSchedulePage()">
-              <span class="btn-icon">📅</span> Jadwal
-            </button>
-            <button class="nav-btn" type="button" onclick="logoutUser()">
-              <span class="btn-icon">🚪</span> Log Out
-            </button>
+            <button class="nav-btn" type="button" onclick="openDiscussion()"><span class="btn-icon">💬</span> Diskusi</button>
+            <button class="nav-btn" type="button" onclick="openSchedulePage()"><span class="btn-icon">📅</span> Jadwal</button>
+            <button class="nav-btn" type="button" onclick="logoutUser()"><span class="btn-icon">🚪</span> Log Out</button>
           </div>
         </div>
 
@@ -1227,147 +895,54 @@
 
           <div class="grid" style="grid-template-columns:1fr 1fr;">
             <div>
-              <div class="input-group">
-                <label>Nama Lengkap</label>
-                <input id="profileName" type="text" />
-              </div>
-              <div class="input-group">
-                <label>Fakultas</label>
-                <select id="profileFaculty"></select>
-              </div>
-              <div class="input-group">
-                <label>Jurusan</label>
-                <select id="profileMajor"></select>
-              </div>
+              <div class="input-group"><label>Nama Lengkap</label><input id="profileName" type="text" /></div>
+              <div class="input-group"><label>Fakultas</label><select id="profileFaculty"></select></div>
+              <div class="input-group"><label>Jurusan</label><select id="profileMajor"></select></div>
             </div>
-
             <div>
               <div class="input-group">
                 <label>Semester</label>
                 <select id="profileSemester">
-                  <option>Semester 1</option>
-                  <option>Semester 2</option>
-                  <option>Semester 3</option>
-                  <option>Semester 4</option>
-                  <option>Semester 5</option>
-                  <option>Semester 6</option>
-                  <option>Semester 7</option>
-                  <option>Semester 8</option>
+                  <option>Semester 1</option><option>Semester 2</option><option>Semester 3</option><option>Semester 4</option>
+                  <option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option>
                 </select>
               </div>
-              <div class="input-group">
-                <label>Email</label>
-                <input id="profileEmail" type="email" />
-              </div>
-              <div class="input-group">
-                <label>Nomor WhatsApp</label>
-                <input id="profileWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
-              </div>
-              <div class="input-group">
-                <label>Bio Singkat</label>
-                <textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus di tugas dan diskusi."></textarea>
-              </div>
+              <div class="input-group"><label>Email</label><input id="profileEmail" type="email" /></div>
+              <div class="input-group"><label>Nomor WhatsApp</label><input id="profileWhatsapp" type="text" placeholder="Contoh: 6281234567890" /></div>
+              <div class="input-group"><label>Bio Singkat</label><textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus pada tugas dan diskusi."></textarea></div>
             </div>
           </div>
 
           <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
-            <button class="dark-btn" type="button" style="width:auto;" onclick="saveProfile()">
-              <span class="btn-label"><span class="btn-icon">💾</span> Simpan Perubahan</span>
-            </button>
-            <button class="outline-btn" type="button" style="width:auto;" onclick="goHome()">
-              <span class="btn-label"><span class="btn-icon">↩️</span> Kembali ke Home</span>
-            </button>
+            <button class="dark-btn" type="button" style="width:auto;" onclick="saveProfile()"><span class="btn-label"><span class="btn-icon">💾</span> Simpan Perubahan</span></button>
+            <button class="outline-btn" type="button" style="width:auto;" onclick="goHome()"><span class="btn-label"><span class="btn-icon">↩️</span> Kembali ke Home</span></button>
           </div>
         </div>
       </section>
-
     </div>
   </div>
 
   <script>
     const facultyMajors = {
-      'Fakultas Ilmu Pendidikan (FIP)': [
-        'Administrasi Pendidikan',
-        'Bimbingan dan Konseling',
-        'Pendidikan Guru SD',
-        'Pendidikan Luar Biasa',
-        'Pendidikan Luar Sekolah',
-        'Pendidikan Anak Usia Dini',
-        'Teknologi Pendidikan'
-      ],
-      'Fakultas Sastra (FS)': [
-        'Pendidikan Bahasa Indonesia',
-        'Pendidikan Bahasa Inggris',
-        'Pendidikan Bahasa Arab',
-        'Pendidikan Seni Rupa',
-        'Pendidikan Seni Tari dan Musik',
-        'Sastra Indonesia',
-        'Sastra Inggris'
-      ],
-      'Fakultas Matematika dan IPA (FMIPA)': [
-        'Matematika',
-        'Fisika',
-        'Kimia',
-        'Biologi',
-        'Pendidikan Matematika',
-        'Pendidikan Fisika',
-        'Pendidikan Kimia',
-        'Pendidikan Biologi',
-        'Pendidikan IPA'
-      ],
-      'Fakultas Ekonomi dan Bisnis (FEB)': [
-        'Manajemen',
-        'Akuntansi',
-        'Ekonomi Pembangunan',
-        'Pendidikan Ekonomi',
-        'Bisnis Digital'
-      ],
-      'Fakultas Teknik (FT)': [
-        'Teknik Informatika',
-        'Teknik Elektro',
-        'Teknik Mesin',
-        'Teknik Sipil',
-        'Pendidikan Teknik Mesin',
-        'Pendidikan Teknik Otomotif',
-        'Arsitektur'
-      ],
-      'Fakultas Ilmu Keolahragaan (FIK)': [
-        'Pendidikan Jasmani Kesehatan dan Rekreasi',
-        'Ilmu Keolahragaan',
-        'Kepelatihan Olahraga'
-      ],
-      'Fakultas Ilmu Sosial (FIS)': [
-        'Pendidikan Sejarah',
-        'Pendidikan Geografi',
-        'Pendidikan Pancasila dan Kewarganegaraan',
-        'Sosiologi',
-        'Ilmu Komunikasi'
-      ],
+      'Fakultas Ilmu Pendidikan (FIP)': ['Administrasi Pendidikan','Bimbingan dan Konseling','Pendidikan Guru SD','Pendidikan Luar Biasa','Pendidikan Luar Sekolah','Pendidikan Anak Usia Dini','Teknologi Pendidikan'],
+      'Fakultas Sastra (FS)': ['Pendidikan Bahasa Indonesia','Pendidikan Bahasa Inggris','Pendidikan Bahasa Arab','Pendidikan Seni Rupa','Pendidikan Seni Tari dan Musik','Sastra Indonesia','Sastra Inggris'],
+      'Fakultas Matematika dan IPA (FMIPA)': ['Matematika','Fisika','Kimia','Biologi','Pendidikan Matematika','Pendidikan Fisika','Pendidikan Kimia','Pendidikan Biologi','Pendidikan IPA'],
+      'Fakultas Ekonomi dan Bisnis (FEB)': ['Manajemen','Akuntansi','Ekonomi Pembangunan','Pendidikan Ekonomi','Bisnis Digital'],
+      'Fakultas Teknik (FT)': ['Teknik Informatika','Teknik Elektro','Teknik Mesin','Teknik Sipil','Pendidikan Teknik Mesin','Pendidikan Teknik Otomotif','Arsitektur'],
+      'Fakultas Ilmu Keolahragaan (FIK)': ['Pendidikan Jasmani Kesehatan dan Rekreasi','Ilmu Keolahragaan','Kepelatihan Olahraga'],
+      'Fakultas Ilmu Sosial (FIS)': ['Pendidikan Sejarah','Pendidikan Geografi','Pendidikan Pancasila dan Kewarganegaraan','Sosiologi','Ilmu Komunikasi'],
       'Fakultas Psikologi (FPsi)': ['Psikologi'],
-      'Fakultas Vokasi (FV)': [
-        'D4 Desain Mode',
-        'D4 Animasi',
-        'D4 Teknologi Rekayasa Manufaktur',
-        'D4 Pengelolaan Perhotelan'
-      ],
-      'Fakultas Kedokteran (FK)': ['Kedokteran', 'Farmasi', 'Ilmu Keperawatan'],
-      'Sekolah Pascasarjana': ['Magister Pendidikan', 'Magister Manajemen', 'Doktoral Pendidikan']
+      'Fakultas Vokasi (FV)': ['D4 Desain Mode','D4 Animasi','D4 Teknologi Rekayasa Manufaktur','D4 Pengelolaan Perhotelan'],
+      'Fakultas Kedokteran (FK)': ['Kedokteran','Farmasi','Ilmu Keperawatan'],
+      'Sekolah Pascasarjana': ['Magister Pendidikan','Magister Manajemen','Doktoral Pendidikan']
     };
 
     const STORAGE_USERS = 'studymatch_users';
     const STORAGE_CURRENT = 'studymatch_current_user';
     const STORAGE_FRIENDS = 'studymatch_friends';
 
-    const firstNames = [
-      'Nadia','Raka','Dimas','Salsa','Aulia','Rina','Fajar','Rizky','Nabila','Tegar',
-      'Putri','Farhan','Rani','Adit','Dea','Bagas','Cindy','Reza','Sinta','Yoga',
-      'Naufal','Anisa','Fikri','Rafli','Sheila','Dian','Riko','Lutfi','Mira','Hana'
-    ];
-
-    const lastNames = [
-      'Putri','Maulana','Pratama','Aulia','Rahma','Saputra','Permata','Wijaya','Kusuma','Ramadhan',
-      'Mahardika','Lestari','Nugraha','Wibowo','Puspita','Firmansyah','Setiawan','Amanda','Hidayat','Salsabila'
-    ];
+    const firstNames = ['Nadia','Raka','Dimas','Salsa','Aulia','Rina','Fajar','Rizky','Nabila','Tegar','Putri','Farhan','Rani','Adit','Dea','Bagas','Cindy','Reza','Sinta','Yoga','Naufal','Anisa','Fikri','Rafli','Sheila','Dian','Riko','Lutfi','Mira','Hana'];
+    const lastNames = ['Putri','Maulana','Pratama','Aulia','Rahma','Saputra','Permata','Wijaya','Kusuma','Ramadhan','Mahardika','Lestari','Nugraha','Wibowo','Puspita','Firmansyah','Setiawan','Amanda','Hidayat','Salsabila'];
 
     const appState = {
       currentPage: 'login',
@@ -1389,8 +964,19 @@
         { title: 'Diskusi Manajemen Inovasi', date: '2026-03-15', time: '19:00', place: 'Google Meet', note: 'Bahas pembagian tugas presentasi' },
         { title: 'Belajar Bareng Akuntansi', date: '2026-03-17', time: '16:00', place: 'Perpustakaan', note: 'Review materi dan latihan soal' }
       ],
-      selectedDiscussionFriend: ''
+      selectedDiscussionFriend: '',
+      selectedDiscussionFriendWhatsapp: ''
     };
+
+    function normalizeWhatsapp(number) {
+      const cleaned = String(number || '').replace(/[^0-9]/g, '');
+      if (cleaned.startsWith('0')) return '62' + cleaned.slice(1);
+      return cleaned;
+    }
+
+    function isValidWhatsapp(number) {
+      return /^62\d{8,13}$/.test(number);
+    }
 
     function setButtonLoading(buttonId, isLoading) {
       const btn = document.getElementById(buttonId);
@@ -1401,45 +987,17 @@
 
     function hideInitialLoading() {
       const loader = document.getElementById('loadingScreen');
-      setTimeout(() => {
-        loader.classList.add('hide');
-      }, 700);
+      setTimeout(() => loader.classList.add('hide'), 700);
     }
 
-    function saveUsers(users) {
-      localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-    }
-
-    function getUsers() {
-      const raw = localStorage.getItem(STORAGE_USERS);
-      return raw ? JSON.parse(raw) : [];
-    }
-
-    function saveCurrentUser(user) {
-      localStorage.setItem(STORAGE_CURRENT, JSON.stringify(user));
-    }
-
-    function getCurrentUser() {
-      const raw = localStorage.getItem(STORAGE_CURRENT);
-      return raw ? JSON.parse(raw) : null;
-    }
-
-    function clearCurrentUser() {
-      localStorage.removeItem(STORAGE_CURRENT);
-    }
-
-    function getFriendKey() {
-      return `${STORAGE_FRIENDS}_${(appState.user.email || '').toLowerCase()}`;
-    }
-
-    function getFriends() {
-      const raw = localStorage.getItem(getFriendKey());
-      return raw ? JSON.parse(raw) : [];
-    }
-
-    function saveFriends(friends) {
-      localStorage.setItem(getFriendKey(), JSON.stringify(friends));
-    }
+    function saveUsers(users) { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
+    function getUsers() { const raw = localStorage.getItem(STORAGE_USERS); return raw ? JSON.parse(raw) : []; }
+    function saveCurrentUser(user) { localStorage.setItem(STORAGE_CURRENT, JSON.stringify(user)); }
+    function getCurrentUser() { const raw = localStorage.getItem(STORAGE_CURRENT); return raw ? JSON.parse(raw) : null; }
+    function clearCurrentUser() { localStorage.removeItem(STORAGE_CURRENT); }
+    function getFriendKey() { return `${STORAGE_FRIENDS}_${(appState.user.email || '').toLowerCase()}`; }
+    function getFriends() { const raw = localStorage.getItem(getFriendKey()); return raw ? JSON.parse(raw) : []; }
+    function saveFriends(friends) { localStorage.setItem(getFriendKey(), JSON.stringify(friends)); }
 
     function makeDummyUsers() {
       const users = [];
@@ -1451,11 +1009,8 @@
             const first = firstNames[index % firstNames.length];
             const last = lastNames[index % lastNames.length];
             const name = `${first} ${last}`;
-            const emailBase = `${first}.${last}.${major}`.toLowerCase()
-              .replace(/\s+/g, '')
-              .replace(/[^a-z0-9.]/g, '');
+            const emailBase = `${first}.${last}.${major}`.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9.]/g, '');
             const email = `${emailBase}${i + 1}@studymatch.id`;
-
             users.push({
               name,
               faculty,
@@ -1467,7 +1022,6 @@
               bio: `Mahasiswa ${major} yang suka diskusi dan belajar bareng.`,
               isSeeded: true
             });
-
             index++;
           }
         });
@@ -1478,9 +1032,7 @@
 
     function bootstrapUsers() {
       const existing = getUsers();
-      if (!existing.length) {
-        saveUsers(makeDummyUsers());
-      }
+      if (!existing.length) saveUsers(makeDummyUsers());
     }
 
     function initials(name) {
@@ -1497,12 +1049,10 @@
     function setPage(page) {
       if (appState.currentPage !== page) appState.previousPage = appState.currentPage;
       appState.currentPage = page;
-
       ['loginPage','homePage','profilePage','discussionPage','schedulePage'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
-
       const pageEl = document.getElementById(page + 'Page');
       if (pageEl) pageEl.classList.remove('hidden');
     }
@@ -1515,54 +1065,31 @@
       populateDiscussionFriendSelect();
     }
 
-    function goHome() {
-      syncUserToHome();
-      setPage('home');
-    }
+    function goHome() { syncUserToHome(); setPage('home'); }
 
     function goBack() {
-      if (
-        appState.currentPage === 'profile' ||
-        appState.currentPage === 'discussion' ||
-        appState.currentPage === 'schedule'
-      ) {
+      if (appState.currentPage === 'profile' || appState.currentPage === 'discussion' || appState.currentPage === 'schedule') {
         goHome();
         return;
       }
-
       if (appState.currentPage === 'home') {
         setPage('login');
         return;
       }
-
       setPage('login');
     }
 
-    function openProfile() {
-      fillProfileForm();
-      setPage('profile');
-    }
-
-    function openDiscussion() {
-      renderDiscussion();
-      renderDiscussionFriends();
-      populateDiscussionFriendSelect();
-      setPage('discussion');
-    }
-
-    function openSchedulePage() {
-      renderSchedules();
-      setPage('schedule');
-    }
+    function openProfile() { fillProfileForm(); setPage('profile'); }
+    function openDiscussion() { renderDiscussion(); renderDiscussionFriends(); populateDiscussionFriendSelect(); setPage('discussion'); }
+    function openSchedulePage() { renderSchedules(); setPage('schedule'); }
 
     function openGoogleLogin() {
       window.open('https://accounts.google.com/', '_blank');
-      alert('Untuk demo lokal di VS Code, tombol ini membuka halaman login Google asli. Kalau ingin login Google benar-benar masuk kembali ke aplikasi, perlu Firebase atau Google OAuth.');
+      alert('Untuk demo lokal di VS Code, tombol ini membuka halaman login Google asli. Kalau ingin login Google kembali ke aplikasi, perlu Firebase atau Google OAuth.');
     }
 
     function loginManual() {
       setButtonLoading('loginBtn', true);
-
       setTimeout(() => {
         const email = document.getElementById('loginEmail').value.trim().toLowerCase();
         const password = document.getElementById('loginPassword').value.trim();
@@ -1596,23 +1123,29 @@
         syncUserToHome();
         setPage('home');
         setButtonLoading('loginBtn', false);
-      }, 1000);
+      }, 700);
     }
 
     function registerManual() {
       setButtonLoading('registerBtn', true);
-
       setTimeout(() => {
         const name = document.getElementById('registerName').value.trim();
         const faculty = document.getElementById('registerFaculty').value;
         const major = document.getElementById('registerMajor').value;
         const semester = document.getElementById('registerSemester').value;
-        const whatsapp = document.getElementById('registerWhatsapp').value.trim();
+        const whatsappRaw = document.getElementById('registerWhatsapp').value.trim();
+        const whatsapp = normalizeWhatsapp(whatsappRaw);
         const email = document.getElementById('registerEmail').value.trim().toLowerCase();
         const password = document.getElementById('registerPassword').value.trim();
 
         if (!name || !faculty || !major || !semester || !whatsapp || !email || !password) {
           alert('Lengkapi semua data pendaftaran, termasuk nomor WhatsApp.');
+          setButtonLoading('registerBtn', false);
+          return;
+        }
+
+        if (!isValidWhatsapp(whatsapp)) {
+          alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
           setButtonLoading('registerBtn', false);
           return;
         }
@@ -1625,47 +1158,29 @@
 
         const users = getUsers();
         const emailExists = users.some(user => user.email.toLowerCase() === email);
-
         if (emailExists) {
           alert('Email sudah terdaftar. Silakan login pakai akun itu.');
           setButtonLoading('registerBtn', false);
           return;
         }
 
-        const newUser = {
-          name,
-          faculty,
-          major,
-          semester,
-          whatsapp,
-          email,
-          password,
-          bio: ''
-        };
-
+        const newUser = { name, faculty, major, semester, whatsapp, email, password, bio: '' };
         users.push(newUser);
         saveUsers(users);
         saveCurrentUser(newUser);
 
-        appState.user = {
-          name,
-          faculty,
-          major,
-          semester,
-          email,
-          whatsapp,
-          bio: ''
-        };
-
+        appState.user = { name, faculty, major, semester, email, whatsapp, bio: '' };
         syncUserToHome();
         setPage('home');
         setButtonLoading('registerBtn', false);
         alert('Akun berhasil dibuat. Sekarang kamu sudah masuk ke aplikasi.');
-      }, 1200);
+      }, 800);
     }
 
     function logoutUser() {
       clearCurrentUser();
+      appState.selectedDiscussionFriend = '';
+      appState.selectedDiscussionFriendWhatsapp = '';
       setPage('login');
       switchAuthTab('login');
     }
@@ -1673,13 +1188,8 @@
     function populateFacultyOptions(selectId, includeAll = false) {
       const select = document.getElementById(selectId);
       if (!select) return;
-
       const faculties = Object.keys(facultyMajors);
-
-      select.innerHTML = includeAll
-        ? '<option value="all">Semua Fakultas</option>'
-        : '<option value="">Pilih Fakultas</option>';
-
+      select.innerHTML = includeAll ? '<option value="all">Semua Fakultas</option>' : '<option value="">Pilih Fakultas</option>';
       faculties.forEach(f => {
         const option = document.createElement('option');
         option.value = f;
@@ -1692,9 +1202,7 @@
       const select = document.getElementById(selectId);
       if (!select) return;
 
-      select.innerHTML = includeAll
-        ? '<option value="all">Semua Jurusan</option>'
-        : '<option value="">Pilih Jurusan</option>';
+      select.innerHTML = includeAll ? '<option value="all">Semua Jurusan</option>' : '<option value="">Pilih Jurusan</option>';
 
       if (!faculty || faculty === 'all') {
         if (includeAll) {
@@ -1737,7 +1245,8 @@
       const major = document.getElementById('profileMajor').value;
       const semester = document.getElementById('profileSemester').value;
       const email = document.getElementById('profileEmail').value.trim().toLowerCase();
-      const whatsapp = document.getElementById('profileWhatsapp').value.trim();
+      const whatsappRaw = document.getElementById('profileWhatsapp').value.trim();
+      const whatsapp = normalizeWhatsapp(whatsappRaw);
       const bio = document.getElementById('profileBio').value.trim();
 
       if (!name || !faculty || !major || !semester || !email || !whatsapp) {
@@ -1745,28 +1254,22 @@
         return;
       }
 
+      if (!isValidWhatsapp(whatsapp)) {
+        alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
+        return;
+      }
+
       const users = getUsers();
       const duplicateEmail = users.some(user => user.email.toLowerCase() === email && user.email.toLowerCase() !== oldEmail);
-
       if (duplicateEmail) {
         alert('Email itu sudah dipakai akun lain.');
         return;
       }
 
       appState.user = { ...appState.user, name, faculty, major, semester, email, whatsapp, bio };
-
       const index = users.findIndex(user => user.email.toLowerCase() === oldEmail);
       if (index >= 0) {
-        users[index] = {
-          ...users[index],
-          name,
-          faculty,
-          major,
-          semester,
-          email,
-          whatsapp,
-          bio
-        };
+        users[index] = { ...users[index], name, faculty, major, semester, email, whatsapp, bio };
         saveUsers(users);
         saveCurrentUser(users[index]);
       }
@@ -1798,7 +1301,6 @@
 
       const friends = getFriends();
       const exists = friends.some(f => f.email.toLowerCase() === found.email.toLowerCase());
-
       if (exists) {
         alert('Teman ini sudah ada di daftar temanmu.');
         return;
@@ -1819,9 +1321,17 @@
       alert(`${found.name} berhasil ditambahkan ke daftar teman.`);
     }
 
+    function getFriendByName(name) {
+      return getFriends().find(friend => friend.name === name) || null;
+    }
+
     function removeFriend(email) {
       const friends = getFriends().filter(f => f.email.toLowerCase() !== email.toLowerCase());
       saveFriends(friends);
+      if (appState.selectedDiscussionFriend && email.toLowerCase() === (getFriendByName(appState.selectedDiscussionFriend)?.email || '').toLowerCase()) {
+        appState.selectedDiscussionFriend = '';
+        appState.selectedDiscussionFriendWhatsapp = '';
+      }
       renderFriends();
       renderDiscussionFriends();
       populateDiscussionFriendSelect();
@@ -1851,15 +1361,9 @@
             </div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="pink-btn" type="button" style="width:auto;" onclick="addFriendByEmail('${student.email.replace(/'/g, "\\'")}')">
-              <span class="btn-label"><span class="btn-icon">➕</span> Tambah Teman</span>
-            </button>
-            <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${student.name.replace(/'/g, "\\'")}')">
-              <span class="btn-label"><span class="btn-icon">💬</span> Diskusi</span>
-            </button>
-            <button class="green-btn" type="button" style="width:auto;" onclick="startWhatsAppWith('${student.name.replace(/'/g, "\\'")}')">
-              <span class="btn-label"><span class="btn-icon">📱</span> WhatsApp</span>
-            </button>
+            <button class="pink-btn" type="button" style="width:auto;" onclick="addFriendByEmail('${student.email.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">➕</span> Tambah Teman</span></button>
+            <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${student.name.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">💬</span> Diskusi</span></button>
+            <button class="green-btn" type="button" style="width:auto;" onclick="startWhatsAppWith('${student.name.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">📱</span> WhatsApp</span></button>
           </div>
         </div>
       `).join('');
@@ -1868,15 +1372,10 @@
     function renderFriends() {
       const list = document.getElementById('friendList');
       if (!list) return;
-
       const friends = getFriends();
 
       if (!friends.length) {
-        list.innerHTML = `
-          <div class="friend-empty">
-            Belum ada teman yang ditambahkan. Pilih dari rekomendasi teman belajar lalu tekan tombol <b>Tambah Teman</b>.
-          </div>
-        `;
+        list.innerHTML = `<div class="friend-empty">Belum ada teman yang ditambahkan. Pilih dari rekomendasi teman belajar lalu tekan tombol <b>Tambah Teman</b>.</div>`;
         return;
       }
 
@@ -1893,12 +1392,8 @@
             </div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${friend.name.replace(/'/g, "\\'")}')">
-              <span class="btn-label"><span class="btn-icon">💬</span> Pilih Diskusi</span>
-            </button>
-            <button class="danger-btn" type="button" style="width:auto;" onclick="removeFriend('${friend.email.replace(/'/g, "\\'")}')">
-              <span class="btn-label"><span class="btn-icon">🗑️</span> Hapus</span>
-            </button>
+            <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${friend.name.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">💬</span> Pilih Diskusi</span></button>
+            <button class="danger-btn" type="button" style="width:auto;" onclick="removeFriend('${friend.email.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">🗑️</span> Hapus</span></button>
           </div>
         </div>
       `).join('');
@@ -1907,15 +1402,10 @@
     function renderDiscussionFriends() {
       const list = document.getElementById('discussionFriendList');
       if (!list) return;
-
       const friends = getFriends();
 
       if (!friends.length) {
-        list.innerHTML = `
-          <div class="friend-empty">
-            Belum ada teman tersimpan. Tambahkan dulu dari dashboard utama, lalu nanti kamu bisa pilih diskusi dengan siapa.
-          </div>
-        `;
+        list.innerHTML = `<div class="friend-empty">Belum ada teman tersimpan. Tambahkan dulu dari dashboard utama, lalu nanti kamu bisa pilih diskusi dengan siapa.</div>`;
         return;
       }
 
@@ -1931,9 +1421,7 @@
               </div>
             </div>
           </div>
-          <button class="soft-btn" type="button" style="width:auto;" onclick="selectDiscussionFriend('${friend.name.replace(/'/g, "\\'")}')">
-            <span class="btn-label"><span class="btn-icon">🎯</span> Pilih</span>
-          </button>
+          <button class="soft-btn" type="button" style="width:auto;" onclick="selectDiscussionFriend('${friend.name.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">🎯</span> Pilih</span></button>
         </div>
       `).join('');
     }
@@ -1941,7 +1429,6 @@
     function populateDiscussionFriendSelect() {
       const select = document.getElementById('discussionFriendSelect');
       if (!select) return;
-
       const friends = getFriends();
       select.innerHTML = '<option value="">Pilih teman dari daftar</option>';
 
@@ -1949,25 +1436,31 @@
         const option = document.createElement('option');
         option.value = friend.name;
         option.textContent = `${friend.name} - ${friend.major}`;
+        option.dataset.whatsapp = friend.whatsapp || '';
         select.appendChild(option);
       });
 
-      if (appState.selectedDiscussionFriend) {
-        select.value = appState.selectedDiscussionFriend;
-      }
+      if (appState.selectedDiscussionFriend) select.value = appState.selectedDiscussionFriend;
 
       select.onchange = function() {
         if (this.value) {
           selectDiscussionFriend(this.value);
+        } else {
+          appState.selectedDiscussionFriend = '';
+          appState.selectedDiscussionFriendWhatsapp = '';
+          const targetInput = document.getElementById('discussionTarget');
+          if (targetInput) targetInput.value = '';
         }
       };
     }
 
     function selectDiscussionFriend(name) {
       appState.selectedDiscussionFriend = name;
+      const friend = getFriendByName(name);
+      appState.selectedDiscussionFriendWhatsapp = friend ? (friend.whatsapp || '') : '';
+
       const targetInput = document.getElementById('discussionTarget');
       const select = document.getElementById('discussionFriendSelect');
-
       if (targetInput) targetInput.value = name;
       if (select) select.value = name;
     }
@@ -2017,30 +1510,18 @@
         return;
       }
 
-      appState.discussions.push({
-        sender: 'Saya',
-        text,
-        time: getCurrentTimeString(),
-        self: true
-      });
-
-      appState.discussions.push({
-        sender: target,
-        text: 'Siap, nanti kita lanjut bahas ya.',
-        time: getCurrentTimeString(),
-        self: false
-      });
-
+      appState.discussions.push({ sender: 'Saya', text, time: getCurrentTimeString(), self: true });
+      appState.discussions.push({ sender: target, text: 'Siap, nanti kita lanjut bahas ya.', time: getCurrentTimeString(), self: false });
       document.getElementById('discussionInput').value = '';
       renderDiscussion();
     }
 
     function openWhatsApp() {
       const target = document.getElementById('discussionTarget').value.trim() || appState.selectedDiscussionFriend || 'teman diskusi';
-      const wa = (appState.user.whatsapp || '').replace(/[^0-9]/g, '');
+      const wa = normalizeWhatsapp(appState.selectedDiscussionFriendWhatsapp);
 
-      if (!wa) {
-        alert('Isi nomor WhatsApp di halaman profil dulu.');
+      if (!wa || !isValidWhatsapp(wa)) {
+        alert('Pilih teman yang punya nomor WhatsApp terlebih dulu.');
         return;
       }
 
@@ -2050,6 +1531,8 @@
 
     function startDiscussionWith(name) {
       appState.selectedDiscussionFriend = name;
+      const friend = getFriendByName(name);
+      appState.selectedDiscussionFriendWhatsapp = friend ? (friend.whatsapp || '') : '';
       openDiscussion();
       document.getElementById('discussionTarget').value = name;
       document.getElementById('discussionInput').focus();
@@ -2057,20 +1540,20 @@
     }
 
     function startWhatsAppWith(name) {
-      const wa = (appState.user.whatsapp || '').replace(/[^0-9]/g, '');
+      const friend = getFriendByName(name) || getUsers().find(user => user.name === name);
+      const wa = normalizeWhatsapp(friend ? friend.whatsapp : '');
 
-      if (!wa) {
-        alert('Isi nomor WhatsApp di halaman profil dulu.');
+      if (!wa || !isValidWhatsapp(wa)) {
+        alert('Nomor WhatsApp teman belum tersedia.');
         return;
       }
 
-      const text = encodeURIComponent(`Halo ${name}, aku mau ngajak diskusi belajar bareng dari aplikasi StudyMatch.`);
+      const text = encodeURIComponent(`Halo ${name}, aku mau mengajak diskusi belajar bareng dari aplikasi StudyMatch.`);
       window.open(`https://wa.me/${wa}?text=${text}`, '_blank');
     }
 
     function renderSchedules() {
       const list = document.getElementById('scheduleList');
-
       if (!appState.schedules.length) {
         list.innerHTML = '<div class="muted">Belum ada jadwal belajar atau diskusi.</div>';
         return;
@@ -2088,12 +1571,8 @@
             <div class="muted" style="margin-top:10px;">${item.note || '-'}</div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="soft-btn" type="button" style="width:auto;" onclick="editSchedule(${index})">
-              <span class="btn-label"><span class="btn-icon">✏️</span> Edit</span>
-            </button>
-            <button class="danger-btn" type="button" style="width:auto;" onclick="deleteSchedule(${index})">
-              <span class="btn-label"><span class="btn-icon">🗑️</span> Hapus</span>
-            </button>
+            <button class="soft-btn" type="button" style="width:auto;" onclick="editSchedule(${index})"><span class="btn-label"><span class="btn-icon">✏️</span> Edit</span></button>
+            <button class="danger-btn" type="button" style="width:auto;" onclick="deleteSchedule(${index})"><span class="btn-label"><span class="btn-icon">🗑️</span> Hapus</span></button>
           </div>
         </div>
       `).join('');
@@ -2108,17 +1587,13 @@
       const editIndex = Number(document.getElementById('scheduleEditIndex').value);
 
       if (!title || !date || !time || !place) {
-        alert('Lengkapi judul, tanggal, jam, dan tempat/media.');
+        alert('Lengkapi judul, tanggal, jam, dan tempat atau media.');
         return;
       }
 
       const data = { title, date, time, place, note };
-
-      if (editIndex >= 0) {
-        appState.schedules[editIndex] = data;
-      } else {
-        appState.schedules.push(data);
-      }
+      if (editIndex >= 0) appState.schedules[editIndex] = data;
+      else appState.schedules.push(data);
 
       resetScheduleForm();
       renderSchedules();
@@ -2170,7 +1645,6 @@
 
     function init() {
       bootstrapUsers();
-
       populateFacultyOptions('registerFaculty');
       populateFacultyOptions('filterFaculty', true);
       populateFacultyOptions('profileFaculty');
@@ -2178,17 +1652,9 @@
       populateMajorOptions('all', 'filterMajor', true);
       populateMajorOptions(appState.user.faculty, 'profileMajor');
 
-      document.getElementById('registerFaculty').addEventListener('change', e => {
-        populateMajorOptions(e.target.value, 'registerMajor');
-      });
-
-      document.getElementById('filterFaculty').addEventListener('change', e => {
-        populateMajorOptions(e.target.value, 'filterMajor', true);
-      });
-
-      document.getElementById('profileFaculty').addEventListener('change', e => {
-        populateMajorOptions(e.target.value, 'profileMajor');
-      });
+      document.getElementById('registerFaculty').addEventListener('change', e => populateMajorOptions(e.target.value, 'registerMajor'));
+      document.getElementById('filterFaculty').addEventListener('change', e => populateMajorOptions(e.target.value, 'filterMajor', true));
+      document.getElementById('profileFaculty').addEventListener('change', e => populateMajorOptions(e.target.value, 'profileMajor'));
 
       fillProfileForm();
       renderStudents(getVisibleStudents());
@@ -2200,7 +1666,6 @@
 
       const loggedIn = restoreSession();
       if (!loggedIn) setPage('login');
-
       hideInitialLoading();
     }
 
