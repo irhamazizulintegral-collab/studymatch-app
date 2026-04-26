@@ -993,7 +993,7 @@
   bio: 'Suka belajar kelompok dan diskusi tugas.',
   photo: ''
 },
-let selectedProfilePhoto = '';
+
       discussions: [
         { sender: 'Nadia Putri', text: 'Halo, jadi diskusi tugasnya kapan ya?', time: '09:10', self: false },
         { sender: 'Saya', text: 'Bisa kita atur malam ini setelah jam 7.', time: '09:12', self: true }
@@ -1005,7 +1005,7 @@ let selectedProfilePhoto = '';
       selectedDiscussionFriend: '',
       selectedDiscussionFriendWhatsapp: ''
     };
-
+let selectedProfilePhoto = '';
     function normalizeWhatsapp(number) {
       const cleaned = String(number || '').replace(/[^0-9]/g, '');
       if (cleaned.startsWith('0')) return '62' + cleaned.slice(1);
