@@ -1145,14 +1145,15 @@
         }
 
         appState.user = {
-          name: found.name,
-          faculty: found.faculty,
-          major: found.major,
-          semester: found.semester,
-          email: found.email,
-          whatsapp: found.whatsapp || '',
-          bio: found.bio || ''
-        };
+  name: found.name,
+  faculty: found.faculty,
+  major: found.major,
+  semester: found.semester,
+  email: found.email,
+  whatsapp: found.whatsapp || '',
+  bio: found.bio || '',
+  photo: found.photo || ''
+};
 
         saveCurrentUser(found);
         syncUserToHome();
