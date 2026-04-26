@@ -2002,15 +2002,13 @@ function previewProfilePhoto(event) {
     renderSchedules();
     populateDiscussionFriendSelect();
 
-  } catch (error) {
+   } catch (error) {
     console.error('Terjadi error saat memuat aplikasi:', error);
     setPage('login');
   } finally {
     hideInitialLoading();
-  }
 }
-init();
-      
+}
   </script>
 </body>
 </html>
