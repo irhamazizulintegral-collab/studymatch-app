@@ -1504,68 +1504,75 @@ function previewProfilePhoto(event) {
     }
 
     function saveProfile() {
-      const oldEmail = appState.user.email.toLowerCase();
-      const name = document.getElementById('profileName').value.trim();
-      const faculty = document.getElementById('profileFaculty').value;
-      const major = document.getElementById('profileMajor').value;
-      const semester = document.getElementById('profileSemester').value;
-      const email = document.getElementById('profileEmail').value.trim().toLowerCase();
-      const whatsappRaw = document.getElementById('profileWhatsapp').value.trim();
-      const whatsapp = normalizeWhatsapp(whatsappRaw);
-      const bio = document.getElementById('profileBio').value.trim();
-      const hobbies = document.getElementById('profileHobbies').value.trim();
-      const availability = document.getElementById('profileAvailability').value;
+  const oldEmail = appState.user.email.toLowerCase();
+  const name = document.getElementById('profileName').value.trim();
+  const faculty = document.getElementById('profileFaculty').value;
+  const major = document.getElementById('profileMajor').value;
+  const semester = document.getElementById('profileSemester').value;
+  const email = document.getElementById('profileEmail').value.trim().toLowerCase();
+  const whatsappRaw = document.getElementById('profileWhatsapp').value.trim();
+  const whatsapp = normalizeWhatsapp(whatsappRaw);
+  const bio = document.getElementById('profileBio').value.trim();
+  const hobbies = document.getElementById('profileHobbies').value.trim();
+  const availability = document.getElementById('profileAvailability').value;
 
-      if (!name || !faculty || !major || !semester || !email || !whatsapp || !bio || !hobbies || !availability) {
+  if (!name || !faculty || !major || !semester || !email || !whatsapp || !bio || !hobbies || !availability) {
+    alert('Lengkapi data profil terlebih dulu, termasuk bio, hobi, status, dan nomor WhatsApp.');
+    return;
+  }
 
-      if (!isValidWhatsapp(whatsapp)) {
-        alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
-        return;
-      }
+  if (!isValidWhatsapp(whatsapp)) {
+    alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
+    return;
+  }
 
-      const users = getUsers();
-      const duplicateEmail = users.some(user => user.email.toLowerCase() === email && user.email.toLowerCase() !== oldEmail);
-      if (duplicateEmail) {
-        alert('Email itu sudah dipakai akun lain.');
-        return;
-      }
+  const users = getUsers();
+  const duplicateEmail = users.some(user => user.email.toLowerCase() === email && user.email.toLowerCase() !== oldEmail);
 
-    appState.user = { 
-  ...appState.user, 
-  name, 
-  faculty, 
-  major, 
-  semester, 
-  email, 
-  whatsapp, 
-  bio,
-  hobbies,
-  availability,
-  photo: selectedProfilePhoto || appState.user.photo || ''
-};
-      const index = users.findIndex(user => user.email.toLowerCase() === oldEmail);
-      if (index >= 0) {
-        users[index] = { 
-  ...users[index], 
-  name, 
-  faculty, 
-  major, 
-  semester, 
-  email, 
-  whatsapp, 
-  bio,
-  hobbies,
-  availability,
-  photo: appState.user.photo || ''
-};
-        saveUsers(users);
-        saveCurrentUser(users[index]);
-      }
+  if (duplicateEmail) {
+    alert('Email itu sudah dipakai akun lain.');
+    return;
+  }
 
-      syncUserToHome();
-      alert('Profil berhasil diperbarui.');
-      goHome();
-    }
+  appState.user = {
+    ...appState.user,
+    name,
+    faculty,
+    major,
+    semester,
+    email,
+    whatsapp,
+    bio,
+    hobbies,
+    availability,
+    photo: selectedProfilePhoto || appState.user.photo || ''
+  };
+
+  const index = users.findIndex(user => user.email.toLowerCase() === oldEmail);
+
+  if (index >= 0) {
+    users[index] = {
+      ...users[index],
+      name,
+      faculty,
+      major,
+      semester,
+      email,
+      whatsapp,
+      bio,
+      hobbies,
+      availability,
+      photo: appState.user.photo || ''
+    };
+
+    saveUsers(users);
+    saveCurrentUser(users[index]);
+  }
+
+  syncUserToHome();
+  alert('Profil berhasil diperbarui.');
+  goHome();
+}
 
     function getVisibleStudents() {
       const users = getUsers();
@@ -2005,10 +2012,12 @@ function previewProfilePhoto(event) {
    } catch (error) {
     console.error('Terjadi error saat memuat aplikasi:', error);
     setPage('login');
-  } finally {
+    } finally {
     hideInitialLoading();
+  }
 }
-}
-  </script>
+
+init();
+</script>
 </body>
 </html>
