@@ -1613,7 +1613,7 @@ function previewProfilePhoto(event) {
     };
 
     saveUsers(users);
-    saveCurrentUser(users[index]);
+    saveCurrentUser(appState.user);
   }
 
   syncUserToHome();
