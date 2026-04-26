@@ -1705,32 +1705,36 @@ function previewProfilePhoto(event) {
     }
 
     function renderDiscussionFriends() {
-      const list = document.getElementById('discussionFriendList');
-      if (!list) return;
-      const friends = getFriends();
+  const list = document.getElementById('discussionFriendList');
+  if (!list) return;
 
-      if (!friends.length) {
-        list.innerHTML = `<div class="friend-empty">Belum ada teman tersimpan. Tambahkan dulu dari dashboard utama, lalu nanti kamu bisa pilih diskusi dengan siapa.</div>`;
-        return;
-      }
+  const friends = getFriends();
 
-      list.innerHTML = friends.map(friend => `
-        <div class="friend-item">
-          <div class="student-meta">
-           <div class="avatar">${avatarContent(friend)}</div>
-            <div>
-              <div style="font-weight:700;">${friend.name}</div>
-              <div class="chips">
-                <span class="chip">${friend.major}</span>
-                <span class="chip">${friend.semester}</span>
-                <div class="muted" style="margin-top:8px;">${friend.availability || 'Status belum diisi.'}</div>
-              </div>
-            </div>
+  if (!friends.length) {
+    list.innerHTML = `<div class="friend-empty">Belum ada teman tersimpan. Tambahkan dulu dari dashboard utama, lalu nanti kamu bisa pilih diskusi dengan siapa.</div>`;
+    return;
+  }
+
+  list.innerHTML = friends.map(friend => `
+    <div class="friend-item">
+      <div class="student-meta">
+        <div class="avatar">${avatarContent(friend)}</div>
+        <div>
+          <div style="font-weight:700;">${friend.name}</div>
+          <div class="chips">
+            <span class="chip">${friend.major}</span>
+            <span class="chip">${friend.semester}</span>
           </div>
-          <button class="soft-btn" type="button" style="width:auto;" onclick="selectDiscussionFriend('${friend.name.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">🎯</span> Pilih</span></button>
+          <div class="muted" style="margin-top:8px;">${friend.availability || 'Status belum diisi.'}</div>
         </div>
-      `).join('');
-    }
+      </div>
+
+      <button class="soft-btn" type="button" style="width:auto;" onclick="selectDiscussionFriend('${friend.name.replace(/'/g, "\\'")}')">
+        <span class="btn-label"><span class="btn-icon">🎯</span> Pilih</span>
+      </button>
+    </div>
+  `).join('');
+}
 
     function populateDiscussionFriendSelect() {
       const select = document.getElementById('discussionFriendSelect');
