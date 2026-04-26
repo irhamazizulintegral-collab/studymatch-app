@@ -1259,10 +1259,40 @@
         select.appendChild(option);
       });
     }
+function setProfileAvatarDisplay() {
+  const avatar = document.getElementById('profileAvatar');
+  if (!avatar) return;
 
+  if (appState.user.photo) {
+    avatar.innerHTML = `<img src="${appState.user.photo}" alt="Foto Profil">`;
+  } else {
+    avatar.textContent = initials(appState.user.name || 'Pengguna');
+  }
+}
+
+function previewProfilePhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('File harus berupa gambar.');
+    event.target.value = '';
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    selectedProfilePhoto = e.target.result;
+    appState.user.photo = selectedProfilePhoto;
+    setProfileAvatarDisplay();
+  };
+
+  reader.readAsDataURL(file);
+}
     function fillProfileForm() {
-      document.getElementById('profileTitle').textContent = appState.user.name;
-      document.getElementById('profileAvatar').textContent = initials(appState.user.name);
+  document.getElementById('profileTitle').textContent = appState.user.name;
+  setProfileAvatarDisplay();
       document.getElementById('profileName').value = appState.user.name || '';
       document.getElementById('profileEmail').value = appState.user.email || '';
       document.getElementById('profileWhatsapp').value = appState.user.whatsapp || '';
