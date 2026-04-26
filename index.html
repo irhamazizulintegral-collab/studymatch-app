@@ -1352,7 +1352,17 @@ function previewProfilePhoto(event) {
 };
       const index = users.findIndex(user => user.email.toLowerCase() === oldEmail);
       if (index >= 0) {
-        users[index] = { ...users[index], name, faculty, major, semester, email, whatsapp, bio };
+        users[index] = { 
+  ...users[index], 
+  name, 
+  faculty, 
+  major, 
+  semester, 
+  email, 
+  whatsapp, 
+  bio,
+  photo: appState.user.photo || ''
+};
         saveUsers(users);
         saveCurrentUser(users[index]);
       }
