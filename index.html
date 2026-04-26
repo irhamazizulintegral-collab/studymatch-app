@@ -1024,9 +1024,13 @@ let selectedProfilePhoto = '';
     }
 
     function hideInitialLoading() {
-      const loader = document.getElementById('loadingScreen');
-      setTimeout(() => loader.classList.add('hide'), 700);
-    }
+  const loader = document.getElementById('loadingScreen');
+  if (!loader) return;
+
+  setTimeout(() => {
+    loader.classList.add('hide');
+  }, 700);
+}
 
     function saveUsers(users) { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
     function getUsers() { const raw = localStorage.getItem(STORAGE_USERS); return raw ? JSON.parse(raw) : []; }
@@ -1703,52 +1707,79 @@ function previewProfilePhoto(event) {
       document.getElementById('scheduleEditIndex').value = -1;
     }
 
-    function restoreSession() {
-      const current = getCurrentUser();
-      if (current) {
-        appState.user = {
-          name: current.name,
-          faculty: current.faculty,
-          major: current.major,
-          semester: current.semester,
-          email: current.email,
-          whatsapp: current.whatsapp || '',
-          bio: current.bio || ''
-        };
-        syncUserToHome();
-        setPage('home');
-        return true;
-      }
-      return false;
-    }
+   function restoreSession() {
+  const current = getCurrentUser();
+
+  if (current) {
+    appState.user = {
+      name: current.name || 'Pengguna',
+      faculty: current.faculty || '',
+      major: current.major || '',
+      semester: current.semester || 'Semester 1',
+      email: current.email || '',
+      whatsapp: current.whatsapp || '',
+      bio: current.bio || '',
+      photo: current.photo || ''
+    };
+
+    syncUserToHome();
+    setPage('home');
+    return true;
+  }
+
+  return false;
+}
 
     function init() {
-      bootstrapUsers();
-      populateFacultyOptions('registerFaculty');
-      populateFacultyOptions('filterFaculty', true);
-      populateFacultyOptions('profileFaculty');
-      populateMajorOptions('', 'registerMajor');
-      populateMajorOptions('all', 'filterMajor', true);
-      populateMajorOptions(appState.user.faculty, 'profileMajor');
+  try {
+    bootstrapUsers();
 
-      document.getElementById('registerFaculty').addEventListener('change', e => populateMajorOptions(e.target.value, 'registerMajor'));
-      document.getElementById('filterFaculty').addEventListener('change', e => populateMajorOptions(e.target.value, 'filterMajor', true));
-      document.getElementById('profileFaculty').addEventListener('change', e => populateMajorOptions(e.target.value, 'profileMajor'));
+    populateFacultyOptions('registerFaculty');
+    populateFacultyOptions('filterFaculty', true);
+    populateFacultyOptions('profileFaculty');
+    populateMajorOptions('', 'registerMajor');
+    populateMajorOptions('all', 'filterMajor', true);
+    populateMajorOptions(appState.user.faculty, 'profileMajor');
 
-      fillProfileForm();
-      renderStudents(getVisibleStudents());
-      renderFriends();
-      renderDiscussion();
-      renderDiscussionFriends();
-      renderSchedules();
-      populateDiscussionFriendSelect();
+    const registerFaculty = document.getElementById('registerFaculty');
+    const filterFaculty = document.getElementById('filterFaculty');
+    const profileFaculty = document.getElementById('profileFaculty');
 
-      const loggedIn = restoreSession();
-      if (!loggedIn) setPage('login');
-      hideInitialLoading();
+    if (registerFaculty) {
+      registerFaculty.addEventListener('change', e => populateMajorOptions(e.target.value, 'registerMajor'));
     }
 
-    init();
+    if (filterFaculty) {
+      filterFaculty.addEventListener('change', e => populateMajorOptions(e.target.value, 'filterMajor', true));
+    }
+
+    if (profileFaculty) {
+      profileFaculty.addEventListener('change', e => populateMajorOptions(e.target.value, 'profileMajor'));
+    }
+
+    const loggedIn = restoreSession();
+
+    if (!loggedIn) {
+      setPage('login');
+    }
+
+    fillProfileForm();
+    renderStudents(getVisibleStudents());
+    renderFriends();
+    renderDiscussion();
+    renderDiscussionFriends();
+    renderSchedules();
+    populateDiscussionFriendSelect();
+
+  } catch (error) {
+    console.error('Terjadi error saat memuat aplikasi:', error);
+    setPage('login');
+  } finally {
+    hideInitialLoading();
+  }
+}
+
+init();
   </script>
 </body>
 </html>
