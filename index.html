@@ -801,7 +801,24 @@
             
 <div class="input-group">
   <label>Bio Singkat</label>
-  <textarea id="registerBio" placeholder="Contoh: Saya suka belajar kelompok dan diskusi tugas."></textarea>
+  <textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus pada tugas dan diskusi."></textarea>
+</div>
+
+<div class="input-group">
+  <label>Hobi / Minat Belajar</label>
+  <input id="profileHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
+</div>
+
+<div class="input-group">
+  <label>Status Ketersediaan</label>
+  <select id="profileAvailability">
+    <option value="">Pilih Status</option>
+    <option>Bisa belajar malam</option>
+    <option>Bisa belajar sore</option>
+    <option>Bisa weekend</option>
+    <option>Fleksibel menyesuaikan jadwal</option>
+    <option>Sedang sibuk, tetapi bisa diskusi online</option>
+  </select>
 </div>
             <div class="input-group">
   <label>Hobi / Minat Belajar</label>
@@ -1500,7 +1517,7 @@ function previewProfilePhoto(event) {
       document.getElementById('profileWhatsapp').value = appState.user.whatsapp || '';
       document.getElementById('profileBio').value = appState.user.bio || '';
       document.getElementById('profileHobbies').value = appState.user.hobbies || '';
-      document.getElementById('profileAvailability').value = appState.user.availability || 'Fleksibel menyesuaikan jadwal';
+      document.getElementById('profileAvailability').value = appState.user.availability || '';
       document.getElementById('profileFaculty').value = appState.user.faculty || '';
       populateMajorOptions(appState.user.faculty, 'profileMajor');
       document.getElementById('profileMajor').value = appState.user.major || '';
