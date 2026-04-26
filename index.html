@@ -1098,9 +1098,27 @@
               </div>
               <div class="input-group"><label>Email</label><input id="profileEmail" type="email" /></div>
               <div class="input-group"><label>Nomor WhatsApp</label><input id="profileWhatsapp" type="text" placeholder="Contoh: 6281234567890" /></div>
-              <div class="input-group"><label>Bio Singkat</label><textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus pada tugas dan diskusi."></textarea></div>
-            </div>
-          </div>
+             <div class="input-group">
+  <label>Bio Singkat</label>
+  <textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus pada tugas dan diskusi."></textarea>
+</div>
+
+<div class="input-group">
+  <label>Hobi / Minat Belajar</label>
+  <input id="profileHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
+</div>
+
+<div class="input-group">
+  <label>Status Ketersediaan</label>
+  <select id="profileAvailability">
+    <option value="">Pilih Status</option>
+    <option>Bisa belajar malam</option>
+    <option>Bisa belajar sore</option>
+    <option>Bisa weekend</option>
+    <option>Fleksibel menyesuaikan jadwal</option>
+    <option>Sedang sibuk, tetapi bisa diskusi online</option>
+  </select>
+</div>
 
           <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
             <button class="dark-btn" type="button" style="width:auto;" onclick="saveProfile()"><span class="btn-label"><span class="btn-icon">💾</span> Simpan Perubahan</span></button>
