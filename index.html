@@ -550,7 +550,31 @@
       font-weight: 800;
       box-shadow: 0 12px 22px rgba(67,56,202,0.18);
     }
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  object-fit: cover;
+}
 
+.photo-upload-box {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+}
+
+.photo-upload-box label {
+  margin-bottom: 10px;
+}
+
+.photo-preview-text {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-top: 8px;
+}
     .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
     .stat-box { padding: 16px; border-radius: 18px; background: #f8fafc; border: 1px solid #eef2f7; transition: 0.2s ease; }
     .stat-box:hover { transform: translateY(-3px); }
@@ -897,7 +921,13 @@
               <div class="muted">Data profil bisa diedit lalu disimpan.</div>
             </div>
           </div>
-
+<div class="photo-upload-box">
+  <label>Foto Profil</label>
+  <input id="profilePhotoInput" type="file" accept="image/*" onchange="previewProfilePhoto(event)" />
+  <div class="photo-preview-text">
+    Pilih foto dari perangkatmu. Setelah itu klik tombol Simpan Perubahan agar foto tersimpan.
+  </div>
+</div>
           <div class="grid" style="grid-template-columns:1fr 1fr;">
             <div>
               <div class="input-group"><label>Nama Lengkap</label><input id="profileName" type="text" /></div>
