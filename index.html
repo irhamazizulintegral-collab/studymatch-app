@@ -859,7 +859,113 @@
     <span class="btn-label"><span class="btn-icon">✅</span> Daftar</span>
     <span class="btn-loader"></span>
   </button>
+          <div class="auth-help-box">
+            Belum punya akun? Daftar dulu dengan data kampusmu, termasuk nomor WhatsApp supaya nanti bisa lanjut diskusi dan koordinasi jadwal lebih mudah.
+          </div>
+        </div>
+      </section>
 
+      <section id="homePage" class="hidden page">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="nav-btn" type="button" onclick="goBack()"><span class="btn-icon">⬅️</span> Kembali</button>
+            <button class="nav-btn" type="button" onclick="goHome()"><span class="btn-icon">🏠</span> Home</button>
+          </div>
+          <div class="topbar-right">
+            <button class="nav-btn" type="button" onclick="openDiscussion()"><span class="btn-icon">💬</span> Diskusi</button>
+            <button class="nav-btn" type="button" onclick="openSchedulePage()"><span class="btn-icon">📅</span> Jadwal</button>
+            <button class="nav-btn" type="button" onclick="openProfile()"><span class="btn-icon">👤</span> Profil</button>
+            <button class="nav-btn" type="button" onclick="logoutUser()"><span class="btn-icon">🚪</span> Log Out</button>
+          </div>
+        </div>
+
+        <div class="brand-box card">
+          <div class="badge">🏠 Home Dashboard</div>
+          <h1 style="font-size:34px; margin-top:14px; margin-bottom:10px;">Halo, <span id="homeUserName">Pengguna</span> 👋</h1>
+          <p>Temukan partner belajar, tambahkan teman, lalu pilih siapa yang ingin diajak berdiskusi.</p>
+        </div>
+
+        <div class="profile-mini-card">
+          <div class="profile-mini-photo" id="homeProfilePhoto">PD</div>
+          <div class="profile-mini-info">
+            <h3 id="homeProfileName">Pengguna</h3>
+            <p id="homeProfileBio">Bio singkat belum diisi.</p>
+            <div class="chips">
+              <span class="chip" id="homeProfileHobbies">Hobi belum diisi</span>
+              <span class="status-badge" id="homeProfileAvailability">Status belum diisi</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-home-main">
+          <div>
+            <div class="grid">
+              <div class="card panel">
+                <h3 style="margin-bottom:16px;">Filter Teman Belajar</h3>
+
+                <div class="input-group">
+                  <label>Fakultas</label>
+                  <select id="filterFaculty"></select>
+                </div>
+
+                <div class="input-group">
+                  <label>Jurusan</label>
+                  <select id="filterMajor"></select>
+                </div>
+
+                <div class="input-group">
+                  <label>Semester</label>
+                  <select id="filterSemester">
+                    <option value="all">Semua Semester</option>
+                    <option>Semester 1</option>
+                    <option>Semester 2</option>
+                    <option>Semester 3</option>
+                    <option>Semester 4</option>
+                    <option>Semester 5</option>
+                    <option>Semester 6</option>
+                    <option>Semester 7</option>
+                    <option>Semester 8</option>
+                  </select>
+                </div>
+
+                <button class="dark-btn" type="button" onclick="filterStudents()">
+                  <span class="btn-label"><span class="btn-icon">🔎</span> Tampilkan Rekomendasi</span>
+                </button>
+              </div>
+
+              <div class="card panel">
+                <div class="section-title-row">
+                  <div>
+                    <h2 style="margin-bottom:6px;">Rekomendasi Teman Belajar</h2>
+                    <div class="muted">Partner belajar yang cocok dengan kebutuhanmu</div>
+                  </div>
+                  <div class="match" id="resultCount">0 hasil</div>
+                </div>
+                <div class="list" id="studentList"></div>
+              </div>
+            </div>
+
+            <div class="card panel" style="margin-top:20px;">
+              <div class="stat-row">
+                <div class="stat-box"><strong>71%</strong><span class="muted">Tertarik memakai aplikasi</span></div>
+                <div class="stat-box"><strong>89%</strong><span class="muted">Sering belajar sendiri</span></div>
+                <div class="stat-box"><strong>28%</strong><span class="muted">Ingin fitur filter dan chat</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="section-title-row">
+              <div>
+                <h2 style="margin-bottom:6px;">Daftar Teman Saya</h2>
+                <div class="muted">Teman yang sudah kamu tambahkan untuk dipilih saat diskusi.</div>
+              </div>
+            </div>
+            <div class="list" id="friendList"></div>
+          </div>
+        </div>
+      </section>
+      
       <section id="discussionPage" class="hidden page">
         <div class="topbar">
           <div class="topbar-left">
