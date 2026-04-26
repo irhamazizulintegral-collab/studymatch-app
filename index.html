@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -1599,14 +1599,18 @@ function previewProfilePhoto(event) {
       list.innerHTML = friends.map(friend => `
         <div class="friend-item">
           <div class="student-meta">
-            <div class="avatar">${initials(friend.name)}</div>
+            <div class="avatar">${avatarContent(friend)}</div>
             <div>
               <div style="font-weight:700;">${friend.name}</div>
               <div class="chips">
                 <span class="chip">${friend.major}</span>
                 <span class="chip">${friend.semester}</span>
               </div>
-            </div>
+              <div class="muted" style="margin-top:8px;">${friend.bio || 'Bio belum diisi.'}</div>
+              <div class="chips">
+              <span class="chip">🎯 ${friend.hobbies || 'Hobi belum diisi'}</span>
+              <span class="chip">⏰ ${friend.availability || 'Status belum diisi'}</span>
+</div>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="soft-btn" type="button" style="width:auto;" onclick="startDiscussionWith('${friend.name.replace(/'/g, "\\'")}')"><span class="btn-label"><span class="btn-icon">💬</span> Pilih Diskusi</span></button>
@@ -1629,12 +1633,13 @@ function previewProfilePhoto(event) {
       list.innerHTML = friends.map(friend => `
         <div class="friend-item">
           <div class="student-meta">
-            <div class="avatar">${initials(friend.name)}</div>
+           <div class="avatar">${avatarContent(friend)}</div>
             <div>
               <div style="font-weight:700;">${friend.name}</div>
               <div class="chips">
                 <span class="chip">${friend.major}</span>
                 <span class="chip">${friend.semester}</span>
+                <div class="muted" style="margin-top:8px;">${friend.availability || 'Status belum diisi.'}</div>
               </div>
             </div>
           </div>
@@ -1683,16 +1688,18 @@ function previewProfilePhoto(event) {
     }
 
     function filterStudents() {
-      const faculty = document.getElementById('filterFaculty').value;
-      const major = document.getElementById('filterMajor').value;
+  const faculty = document.getElementById('filterFaculty').value;
+  const major = document.getElementById('filterMajor').value;
+  const semester = document.getElementById('filterSemester').value;
 
-      const filtered = getVisibleStudents().filter(s =>
-        (faculty === 'all' || s.faculty === faculty) &&
-        (major === 'all' || s.major === major)
-      );
+  const filtered = getVisibleStudents().filter(s =>
+    (faculty === 'all' || s.faculty === faculty) &&
+    (major === 'all' || s.major === major) &&
+    (semester === 'all' || s.semester === semester)
+  );
 
-      renderStudents(filtered);
-    }
+  renderStudents(filtered);
+}
 
     function getCurrentTimeString() {
       const now = new Date();
@@ -1841,7 +1848,7 @@ function previewProfilePhoto(event) {
       document.getElementById('scheduleEditIndex').value = -1;
     }
 
-   function restoreSession() {
+  function restoreSession() {
   const current = getCurrentUser();
 
   if (current) {
@@ -1853,9 +1860,18 @@ function previewProfilePhoto(event) {
       email: current.email || '',
       whatsapp: current.whatsapp || '',
       bio: current.bio || '',
+      hobbies: current.hobbies || '',
+      availability: current.availability || '',
       photo: current.photo || ''
     };
 
+    syncUserToHome();
+    setPage('home');
+    return true;
+  }
+
+  return false;
+}
     syncUserToHome();
     setPage('home');
     return true;
