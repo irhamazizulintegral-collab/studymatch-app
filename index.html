@@ -794,10 +794,9 @@
                 <option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option>
               </select>
             </div>
-<div class="input-group"><label>Nomor WhatsApp</label><input id="profileWhatsapp" type="text" placeholder="Contoh: 6281234567890" /></div>
 <div class="input-group">
-  <label>Bio Singkat</label>
-  <textarea id="profileBio" placeholder="Contoh: Suka belajar kelompok, fokus pada tugas dan diskusi."></textarea>
+  <label>Nomor WhatsApp</label>
+  <input id="registerWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
 </div>
 
 <div class="input-group">
@@ -815,6 +814,7 @@
     <option>Sedang sibuk, tetapi bisa diskusi online</option>
   </select>
 </div>
+
 <div class="input-group">
   <label>Hobi / Minat Belajar</label>
   <input id="registerHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
@@ -1204,6 +1204,28 @@ let selectedProfilePhoto = '';
     function initials(name) {
       return name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
     }
+    
+    function avatarContent(user) {
+  if (user && user.photo) {
+    return `<img src="${user.photo}" alt="Foto ${user.name || 'Pengguna'}">`;
+  }
+
+  return initials((user && user.name) || 'Pengguna');
+}
+
+function updateHomeProfileCard() {
+  const photoBox = document.getElementById('homeProfilePhoto');
+  const nameBox = document.getElementById('homeProfileName');
+  const bioBox = document.getElementById('homeProfileBio');
+  const hobbiesBox = document.getElementById('homeProfileHobbies');
+  const availabilityBox = document.getElementById('homeProfileAvailability');
+
+  if (photoBox) photoBox.innerHTML = avatarContent(appState.user);
+  if (nameBox) nameBox.textContent = appState.user.name || 'Pengguna';
+  if (bioBox) bioBox.textContent = appState.user.bio || 'Bio singkat belum diisi.';
+  if (hobbiesBox) hobbiesBox.textContent = appState.user.hobbies || 'Hobi belum diisi';
+  if (availabilityBox) availabilityBox.textContent = appState.user.availability || 'Status belum diisi';
+}
 
     function switchAuthTab(tab) {
       document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
@@ -1223,13 +1245,15 @@ let selectedProfilePhoto = '';
       if (pageEl) pageEl.classList.remove('hidden');
     }
 
-    function syncUserToHome() {
-      const homeUserName = document.getElementById('homeUserName');
-      if (homeUserName) homeUserName.textContent = appState.user.name;
-      fillProfileForm();
-      renderFriends();
-      populateDiscussionFriendSelect();
-    }
+   function syncUserToHome() {
+  const homeUserName = document.getElementById('homeUserName');
+  if (homeUserName) homeUserName.textContent = appState.user.name;
+
+  updateHomeProfileCard();
+  fillProfileForm();
+  renderFriends();
+  populateDiscussionFriendSelect();
+}
 
     function goHome() { syncUserToHome(); setPage('home'); }
 
@@ -1283,6 +1307,8 @@ let selectedProfilePhoto = '';
   email: found.email,
   whatsapp: found.whatsapp || '',
   bio: found.bio || '',
+  hobbies: found.hobbies || '',
+  availability: found.availability || '',
   photo: found.photo || ''
 };
 
@@ -1302,14 +1328,17 @@ let selectedProfilePhoto = '';
         const semester = document.getElementById('registerSemester').value;
         const whatsappRaw = document.getElementById('registerWhatsapp').value.trim();
         const whatsapp = normalizeWhatsapp(whatsappRaw);
+        const bio = document.getElementById('registerBio').value.trim();
+        const hobbies = document.getElementById('registerHobbies').value.trim();
+        const availability = document.getElementById('registerAvailability').value;
         const email = document.getElementById('registerEmail').value.trim().toLowerCase();
         const password = document.getElementById('registerPassword').value.trim();
 
-        if (!name || !faculty || !major || !semester || !whatsapp || !email || !password) {
-          alert('Lengkapi semua data pendaftaran, termasuk nomor WhatsApp.');
-          setButtonLoading('registerBtn', false);
-          return;
-        }
+        if (!name || !faculty || !major || !semester || !whatsapp || !bio || !hobbies || !availability || !email || !password) {
+  alert('Lengkapi semua data pendaftaran, termasuk bio, hobi, status, dan nomor WhatsApp.');
+  setButtonLoading('registerBtn', false);
+  return;
+}
 
         if (!isValidWhatsapp(whatsapp)) {
           alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
@@ -1331,12 +1360,35 @@ let selectedProfilePhoto = '';
           return;
         }
 
-        const newUser = { name, faculty, major, semester, whatsapp, email, password, bio: '', photo: '' };
+       const newUser = { 
+  name, 
+  faculty, 
+  major, 
+  semester, 
+  whatsapp, 
+  email, 
+  password, 
+  bio, 
+  hobbies, 
+  availability, 
+  photo: '' 
+};
         users.push(newUser);
         saveUsers(users);
         saveCurrentUser(newUser);
 
-        appState.user = { name, faculty, major, semester, email, whatsapp, bio: '', photo: '' };
+        appState.user = { 
+  name, 
+  faculty, 
+  major, 
+  semester, 
+  email, 
+  whatsapp, 
+  bio, 
+  hobbies, 
+  availability, 
+  photo: '' 
+};
         syncUserToHome();
         setPage('home');
         setButtonLoading('registerBtn', false);
@@ -1441,6 +1493,8 @@ function previewProfilePhoto(event) {
       document.getElementById('profileEmail').value = appState.user.email || '';
       document.getElementById('profileWhatsapp').value = appState.user.whatsapp || '';
       document.getElementById('profileBio').value = appState.user.bio || '';
+      document.getElementById('profileHobbies').value = appState.user.hobbies || '';
+      document.getElementById('profileAvailability').value = appState.user.availability || 'Fleksibel menyesuaikan jadwal';
       document.getElementById('profileFaculty').value = appState.user.faculty || '';
       populateMajorOptions(appState.user.faculty, 'profileMajor');
       document.getElementById('profileMajor').value = appState.user.major || '';
@@ -1457,11 +1511,10 @@ function previewProfilePhoto(event) {
       const whatsappRaw = document.getElementById('profileWhatsapp').value.trim();
       const whatsapp = normalizeWhatsapp(whatsappRaw);
       const bio = document.getElementById('profileBio').value.trim();
+      const hobbies = document.getElementById('profileHobbies').value.trim();
+      const availability = document.getElementById('profileAvailability').value;
 
-      if (!name || !faculty || !major || !semester || !email || !whatsapp) {
-        alert('Lengkapi data profil terlebih dulu, termasuk nomor WhatsApp.');
-        return;
-      }
+      if (!name || !faculty || !major || !semester || !email || !whatsapp || !bio || !hobbies || !availability) {
 
       if (!isValidWhatsapp(whatsapp)) {
         alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
@@ -1475,7 +1528,7 @@ function previewProfilePhoto(event) {
         return;
       }
 
-      appState.user = { 
+    appState.user = { 
   ...appState.user, 
   name, 
   faculty, 
@@ -1484,6 +1537,8 @@ function previewProfilePhoto(event) {
   email, 
   whatsapp, 
   bio,
+  hobbies,
+  availability,
   photo: selectedProfilePhoto || appState.user.photo || ''
 };
       const index = users.findIndex(user => user.email.toLowerCase() === oldEmail);
@@ -1497,6 +1552,8 @@ function previewProfilePhoto(event) {
   email, 
   whatsapp, 
   bio,
+  hobbies,
+  availability,
   photo: appState.user.photo || ''
 };
         saveUsers(users);
@@ -1890,13 +1947,6 @@ function previewProfilePhoto(event) {
       photo: current.photo || ''
     };
 
-    syncUserToHome();
-    setPage('home');
-    return true;
-  }
-
-  return false;
-}
     syncUserToHome();
     setPage('home');
     return true;
