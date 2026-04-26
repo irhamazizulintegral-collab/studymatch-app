@@ -786,83 +786,80 @@
           </div>
 
           <div id="registerForm" class="auth-form-box hidden">
-            <div class="input-group"><label>Nama Lengkap</label><input id="registerName" type="text" placeholder="Nama lengkap" /></div>
-            <div class="input-group"><label>Fakultas</label><select id="registerFaculty"><option value="">Pilih Fakultas</option></select></div>
-            <div class="input-group"><label>Jurusan</label><select id="registerMajor"></select></div>
-            <div class="input-group">
-              <label>Semester</label>
-              <select id="registerSemester">
-                <option value="">Pilih Semester</option>
-                <option>Semester 1</option><option>Semester 2</option><option>Semester 3</option><option>Semester 4</option>
-                <option>Semester 5</option><option>Semester 6</option><option>Semester 7</option><option>Semester 8</option>
-              </select>
-            </div>
-<div class="input-group">
-  <label>Nomor WhatsApp</label>
-  <input id="registerWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
-</div>
-            
-<div class="input-group">
-  <label>Bio Singkat</label>
-  <textarea id="registerBio" placeholder="Contoh: Saya suka belajar kelompok dan diskusi tugas."></textarea>
-</div>
+  <div class="input-group">
+    <label>Nama Lengkap</label>
+    <input id="registerName" type="text" placeholder="Nama lengkap" />
+  </div>
 
-<div class="input-group">
-  <label>Hobi / Minat Belajar</label>
-  <input id="registerHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
-</div>
+  <div class="input-group">
+    <label>Fakultas</label>
+    <select id="registerFaculty">
+      <option value="">Pilih Fakultas</option>
+    </select>
+  </div>
 
-<div class="input-group">
-  <label>Status Ketersediaan</label>
-  <select id="registerAvailability">
-    <option value="">Pilih Status</option>
-    <option>Bisa belajar malam</option>
-    <option>Bisa belajar sore</option>
-    <option>Bisa weekend</option>
-    <option>Fleksibel menyesuaikan jadwal</option>
-    <option>Sedang sibuk, tetapi bisa diskusi online</option>
-  </select>
-</div>
-            <div class="input-group">
-  <label>Hobi / Minat Belajar</label>
-  <input id="profileHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
-</div>
+  <div class="input-group">
+    <label>Jurusan</label>
+    <select id="registerMajor"></select>
+  </div>
 
-<div class="input-group">
-  <label>Status Ketersediaan</label>
-  <select id="profileAvailability">
-    <option>Bisa belajar malam</option>
-    <option>Bisa belajar sore</option>
-    <option>Bisa weekend</option>
-    <option>Fleksibel menyesuaikan jadwal</option>
-    <option>Sedang sibuk, tetapi bisa diskusi online</option>
-  </select>
-</div>
-            
-<div class="input-group">
-  <label>Hobi / Minat Belajar</label>
-  <input id="registerHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
-</div>
+  <div class="input-group">
+    <label>Semester</label>
+    <select id="registerSemester">
+      <option value="">Pilih Semester</option>
+      <option>Semester 1</option>
+      <option>Semester 2</option>
+      <option>Semester 3</option>
+      <option>Semester 4</option>
+      <option>Semester 5</option>
+      <option>Semester 6</option>
+      <option>Semester 7</option>
+      <option>Semester 8</option>
+    </select>
+  </div>
 
-<div class="input-group">
-  <label>Status Ketersediaan</label>
-  <select id="registerAvailability">
-    <option value="">Pilih Status</option>
-    <option>Bisa belajar malam</option>
-    <option>Bisa belajar sore</option>
-    <option>Bisa weekend</option>
-    <option>Fleksibel menyesuaikan jadwal</option>
-    <option>Sedang sibuk, tetapi bisa diskusi online</option>
-  </select>
-</div>
+  <div class="input-group">
+    <label>Nomor WhatsApp</label>
+    <input id="registerWhatsapp" type="text" placeholder="Contoh: 6281234567890" />
+  </div>
 
-<div class="input-group"><label>Email</label><input id="registerEmail" type="email" placeholder="email@kampus.ac.id" /></div>
-<div class="input-group"><label>Password</label><input id="registerPassword" type="password" placeholder="Minimal 8 karakter" /></div>
-            <button class="dark-btn" id="registerBtn" type="button" onclick="registerManual()">
-              <span class="btn-label"><span class="btn-icon">✅</span> Daftar</span>
-              <span class="btn-loader"></span>
-            </button>
-          </div>
+  <div class="input-group">
+    <label>Bio Singkat</label>
+    <textarea id="registerBio" placeholder="Contoh: Saya suka belajar kelompok dan diskusi tugas."></textarea>
+  </div>
+
+  <div class="input-group">
+    <label>Hobi / Minat Belajar</label>
+    <input id="registerHobbies" type="text" placeholder="Contoh: Bahasa Arab, desain, diskusi, membaca" />
+  </div>
+
+  <div class="input-group">
+    <label>Status Ketersediaan</label>
+    <select id="registerAvailability">
+      <option value="">Pilih Status</option>
+      <option>Bisa belajar malam</option>
+      <option>Bisa belajar sore</option>
+      <option>Bisa weekend</option>
+      <option>Fleksibel menyesuaikan jadwal</option>
+      <option>Sedang sibuk, tetapi bisa diskusi online</option>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <label>Email</label>
+    <input id="registerEmail" type="email" placeholder="email@kampus.ac.id" />
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input id="registerPassword" type="password" placeholder="Minimal 8 karakter" />
+  </div>
+
+  <button class="dark-btn" id="registerBtn" type="button" onclick="registerManual()">
+    <span class="btn-label"><span class="btn-icon">✅</span> Daftar</span>
+    <span class="btn-loader"></span>
+  </button>
+</div>
 
           <div class="auth-help-box">
             Belum punya akun? Daftar dulu dengan data kampusmu, termasuk nomor WhatsApp supaya nanti bisa lanjut diskusi dan koordinasi jadwal lebih mudah.
