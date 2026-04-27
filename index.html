@@ -1344,85 +1344,8 @@ function updateHomeProfileCard() {
       alert('Untuk demo lokal di VS Code, tombol ini membuka halaman login Google asli. Kalau ingin login Google kembali ke aplikasi, perlu Firebase atau Google OAuth.');
     }
 
-  async function loginManual() {
-  setButtonLoading('loginBtn', true);
 
-  try {
-    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-    const password = document.getElementById('loginPassword').value.trim();
-
-    if (!email || !password) {
-      alert('Isi email dan password dulu.');
-      return;
-    }
-
-    const { data: authData, error: authError } = await window.supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (authError) {
-      alert('Email atau password salah.');
-      return;
-    }
-
-    const uid = authData.user.id;
-
-    const { data: profile, error: profileError } = await window.supabaseClient
-      .from('users')
-      .select('*')
-      .eq('id', uid)
-      .single();
-
-    if (profileError || !profile) {
-      alert('Login berhasil, tetapi data profil belum ditemukan. Silakan lengkapi profil.');
-
-      appState.user = {
-        uid,
-        id: uid,
-        email,
-        name: email.split('@')[0],
-        faculty: '',
-        major: '',
-        semester: 'Semester 1',
-        whatsapp: '',
-        bio: '',
-        hobbies: '',
-        availability: '',
-        photo: ''
-      };
-
-      saveCurrentUser(appState.user);
-      syncUserToHome();
-      setPage('home');
-      return;
-    }
-
-    appState.user = {
-      uid,
-      id: profile.id,
-      email: profile.email || email,
-      name: profile.name || 'Pengguna',
-      faculty: profile.faculty || '',
-      major: profile.major || '',
-      semester: profile.semester || 'Semester 1',
-      whatsapp: profile.whatsapp || '',
-      bio: profile.bio || '',
-      hobbies: profile.hobbies || '',
-      availability: profile.availability || '',
-      photo: profile.photo || ''
-    };
-
-    saveCurrentUser(appState.user);
-    syncUserToHome();
-    setPage('home');
-  } catch (error) {
-    console.error(error);
-    alert('Terjadi kesalahan saat login: ' + error.message);
-  } finally {
-    setButtonLoading('loginBtn', false);
-  }
-}async function loginManual() {
+async function loginManual() {
   setButtonLoading('loginBtn', true);
 
   try {
