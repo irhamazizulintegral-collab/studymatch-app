@@ -1423,6 +1423,91 @@ function updateHomeProfileCard() {
   } finally {
     setButtonLoading('loginBtn', false);
   }
+}async function loginManual() {
+  setButtonLoading('loginBtn', true);
+
+  try {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value.trim();
+    const rememberMe = document.getElementById('rememberMe')?.checked ?? true;
+
+    if (!email || !password) {
+      alert('Isi email dan password dulu.');
+      return;
+    }
+
+    const { data: authData, error: authError } = await window.supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (authError) {
+      alert('Email atau password salah.');
+      return;
+    }
+
+    const uid = authData.user.id;
+
+    const { data: profile, error: profileError } = await window.supabaseClient
+      .from('users')
+      .select('*')
+      .eq('id', uid)
+      .single();
+
+    if (profileError || !profile) {
+      alert('Login berhasil, tetapi data profil belum ditemukan. Silakan lengkapi profil.');
+
+      appState.user = {
+        uid,
+        id: uid,
+        email,
+        name: email.split('@')[0],
+        faculty: '',
+        major: '',
+        semester: 'Semester 1',
+        whatsapp: '',
+        bio: '',
+        hobbies: '',
+        availability: '',
+        photo: ''
+      };
+
+      saveCurrentUser(appState.user);
+      syncUserToHome();
+      setPage('home');
+      return;
+    }
+
+    appState.user = {
+      uid,
+      id: profile.id,
+      email: profile.email || email,
+      name: profile.name || 'Pengguna',
+      faculty: profile.faculty || '',
+      major: profile.major || '',
+      semester: profile.semester || 'Semester 1',
+      whatsapp: profile.whatsapp || '',
+      bio: profile.bio || '',
+      hobbies: profile.hobbies || '',
+      availability: profile.availability || '',
+      photo: profile.photo || ''
+    };
+
+    if (rememberMe) {
+      saveCurrentUser(appState.user);
+    } else {
+      sessionStorage.setItem(STORAGE_CURRENT, JSON.stringify(appState.user));
+      localStorage.removeItem(STORAGE_CURRENT);
+    }
+
+    syncUserToHome();
+    setPage('home');
+  } catch (error) {
+    console.error(error);
+    alert('Terjadi kesalahan saat login: ' + error.message);
+  } finally {
+    setButtonLoading('loginBtn', false);
+  }
 }
   async function registerManual() {
   setButtonLoading('registerBtn', true);
@@ -2063,66 +2148,72 @@ function previewProfilePhoto(event) {
     }
 
   async function restoreSession() {
+  const localCurrent = getCurrentUser();
+  const sessionCurrentRaw = sessionStorage.getItem(STORAGE_CURRENT);
+  const sessionCurrent = sessionCurrentRaw ? JSON.parse(sessionCurrentRaw) : null;
+
+  let activeUser = localCurrent || sessionCurrent;
+
   const { data: sessionData, error: sessionError } = await window.supabaseClient.auth.getSession();
 
-  if (sessionError || !sessionData.session) {
-    return false;
+  if (sessionError) {
+    console.error('Gagal membaca session Supabase:', sessionError);
   }
 
-  const supabaseUser = sessionData.session.user;
-  const uid = supabaseUser.id;
-  const email = supabaseUser.email || '';
+  if (sessionData && sessionData.session && sessionData.session.user) {
+    const supabaseUser = sessionData.session.user;
+    const uid = supabaseUser.id;
+    const email = supabaseUser.email || '';
 
-  const { data: profile, error: profileError } = await window.supabaseClient
-    .from('users')
-    .select('*')
-    .eq('id', uid)
-    .single();
+    const { data: profile, error: profileError } = await window.supabaseClient
+      .from('users')
+      .select('*')
+      .eq('id', uid)
+      .single();
 
-  if (profileError || !profile) {
+    if (!profileError && profile) {
+      activeUser = {
+        uid,
+        id: profile.id,
+        email: profile.email || email,
+        name: profile.name || 'Pengguna',
+        faculty: profile.faculty || '',
+        major: profile.major || '',
+        semester: profile.semester || 'Semester 1',
+        whatsapp: profile.whatsapp || '',
+        bio: profile.bio || '',
+        hobbies: profile.hobbies || '',
+        availability: profile.availability || '',
+        photo: profile.photo || ''
+      };
+    }
+  }
+
+  if (activeUser) {
     appState.user = {
-      uid,
-      id: uid,
-      email,
-      name: email.split('@')[0] || 'Pengguna',
-      faculty: '',
-      major: '',
-      semester: 'Semester 1',
-      whatsapp: '',
-      bio: '',
-      hobbies: '',
-      availability: '',
-      photo: ''
+      uid: activeUser.uid || activeUser.id || '',
+      id: activeUser.id || activeUser.uid || '',
+      name: activeUser.name || 'Pengguna',
+      faculty: activeUser.faculty || '',
+      major: activeUser.major || '',
+      semester: activeUser.semester || 'Semester 1',
+      email: activeUser.email || '',
+      whatsapp: activeUser.whatsapp || '',
+      bio: activeUser.bio || '',
+      hobbies: activeUser.hobbies || '',
+      availability: activeUser.availability || '',
+      photo: activeUser.photo || ''
     };
 
-    saveCurrentUser(appState.user);
     syncUserToHome();
     setPage('home');
     return true;
   }
 
-  appState.user = {
-    uid,
-    id: profile.id,
-    email: profile.email || email,
-    name: profile.name || 'Pengguna',
-    faculty: profile.faculty || '',
-    major: profile.major || '',
-    semester: profile.semester || 'Semester 1',
-    whatsapp: profile.whatsapp || '',
-    bio: profile.bio || '',
-    hobbies: profile.hobbies || '',
-    availability: profile.availability || '',
-    photo: profile.photo || ''
-  };
-
-  saveCurrentUser(appState.user);
-  syncUserToHome();
-  setPage('home');
-  return true;
+  return false;
 }
 
-  async function init() {
+ async function init() {
   try {
     bootstrapUsers();
 
