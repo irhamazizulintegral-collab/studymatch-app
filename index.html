@@ -1132,13 +1132,12 @@
       </section>
     </div>
   </div>
-<script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
   const SUPABASE_URL = "https://vblxfzmahmbjmjwsbxpy.supabase.co";
   const SUPABASE_KEY = "sb_publishable_aw-h4B2IIHz7luFcam0VvA_zP5sQRRS";
 
-  window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
