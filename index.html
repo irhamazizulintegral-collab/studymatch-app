@@ -1607,6 +1607,7 @@ function updateHomeProfileCard() {
   }
 
   clearCurrentUser();
+  sessionStorage.removeItem(STORAGE_CURRENT);
   appState.selectedDiscussionFriend = '';
   appState.selectedDiscussionFriendWhatsapp = '';
   setPage('login');
