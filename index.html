@@ -1326,9 +1326,9 @@ function updateHomeProfileCard() {
     function goHome() { syncUserToHome(); setPage('home'); }
 
     function goBack() {
-      if (appState.currentPage === 'profile' || appState.currentPage === 'discussion' || appState.currentPage === 'schedule') {
-        goHome();
-        return;
+    if (appState.currentPage === 'home') {
+    return;
+    }
       }
       if (appState.currentPage === 'home') {
         setPage('login');
