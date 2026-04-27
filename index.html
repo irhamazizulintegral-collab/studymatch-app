@@ -1157,6 +1157,15 @@
     signOut
   };
 </script>
+        <script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const SUPABASE_URL = "https://vblxfzmahmbjmjwsbxpy.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_aw-h4B2IIHz7luFcam0VvA_zP5sQRRS";
+
+  window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
+        
   <script>
     const facultyMajors = {
       'Fakultas Ilmu Pendidikan (FIP)': ['Administrasi Pendidikan','Bimbingan dan Konseling','Pendidikan Guru SD','Pendidikan Luar Biasa','Pendidikan Luar Sekolah','Pendidikan Anak Usia Dini','Teknologi Pendidikan'],
