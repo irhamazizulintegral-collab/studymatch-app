@@ -1590,6 +1590,11 @@ function setProfileAvatarDisplay() {
 function previewProfilePhoto(event) {
   const file = event.target.files[0];
   if (!file) return;
+  if (file.size > 500 * 1024) {
+  alert('Ukuran foto maksimal 500 KB agar aplikasi tetap ringan.');
+  event.target.value = '';
+  return;
+}
 
   if (!file.type.startsWith('image/')) {
     alert('File harus berupa gambar.');
