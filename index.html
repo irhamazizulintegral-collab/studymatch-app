@@ -1129,6 +1129,34 @@
     </div>
   </div>
 
+        <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut 
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEQWm9BWrutL4tlepoLSBDEtZ9V7ec2IY",
+    authDomain: "studymatch-app-45677.firebaseapp.com",
+    projectId: "studymatch-app-45677",
+    storageBucket: "studymatch-app-45677.firebasestorage.app",
+    messagingSenderId: "151428590385",
+    appId: "1:151428590385:web:3d68c113e13af08e0d1e10"
+  };
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  const auth = getAuth(firebaseApp);
+
+  window.firebaseAuth = auth;
+  window.firebaseFns = {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut
+  };
+</script>
   <script>
     const facultyMajors = {
       'Fakultas Ilmu Pendidikan (FIP)': ['Administrasi Pendidikan','Bimbingan dan Konseling','Pendidikan Guru SD','Pendidikan Luar Biasa','Pendidikan Luar Sekolah','Pendidikan Anak Usia Dini','Teknologi Pendidikan'],
@@ -1327,131 +1355,179 @@ function updateHomeProfileCard() {
       alert('Untuk demo lokal di VS Code, tombol ini membuka halaman login Google asli. Kalau ingin login Google kembali ke aplikasi, perlu Firebase atau Google OAuth.');
     }
 
-    function loginManual() {
-      setButtonLoading('loginBtn', true);
-      setTimeout(() => {
-        const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-        const password = document.getElementById('loginPassword').value.trim();
+   async function loginManual() {
+  setButtonLoading('loginBtn', true);
 
-        if (!email || !password) {
-          alert('Isi email dan password dulu.');
-          setButtonLoading('loginBtn', false);
-          return;
-        }
+  try {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value.trim();
 
-        const users = getUsers();
-        const found = users.find(user => user.email.toLowerCase() === email && user.password === password);
-
-        if (!found) {
-          alert('Akun tidak ditemukan atau password salah. Kalau belum punya akun, silakan daftar dulu.');
-          setButtonLoading('loginBtn', false);
-          return;
-        }
-
-        appState.user = {
-  name: found.name,
-  faculty: found.faculty,
-  major: found.major,
-  semester: found.semester,
-  email: found.email,
-  whatsapp: found.whatsapp || '',
-  bio: found.bio || '',
-  hobbies: found.hobbies || '',
-  availability: found.availability || '',
-  photo: found.photo || ''
-};
-
-        saveCurrentUser(appState.user);
-        syncUserToHome();
-        setPage('home');
-        setButtonLoading('loginBtn', false);
-      }, 700);
+    if (!email || !password) {
+      alert('Isi email dan password dulu.');
+      setButtonLoading('loginBtn', false);
+      return;
     }
 
-    function registerManual() {
-      setButtonLoading('registerBtn', true);
-      setTimeout(() => {
-        const name = document.getElementById('registerName').value.trim();
-        const faculty = document.getElementById('registerFaculty').value;
-        const major = document.getElementById('registerMajor').value;
-        const semester = document.getElementById('registerSemester').value;
-        const whatsappRaw = document.getElementById('registerWhatsapp').value.trim();
-        const whatsapp = normalizeWhatsapp(whatsappRaw);
-        const bio = document.getElementById('registerBio').value.trim();
-        const hobbies = document.getElementById('registerHobbies').value.trim();
-        const availability = document.getElementById('registerAvailability').value;
-        const email = document.getElementById('registerEmail').value.trim().toLowerCase();
-        const password = document.getElementById('registerPassword').value.trim();
+    const { signInWithEmailAndPassword } = window.firebaseFns;
 
-        if (!name || !faculty || !major || !semester || !whatsapp || !bio || !hobbies || !availability || !email || !password) {
-  alert('Lengkapi semua data pendaftaran, termasuk bio, hobi, status, dan nomor WhatsApp.');
-  setButtonLoading('registerBtn', false);
-  return;
+    const result = await signInWithEmailAndPassword(window.firebaseAuth, email, password);
+    const uid = result.user.uid;
+
+    const users = getUsers();
+    let found = users.find(user => user.email.toLowerCase() === email);
+
+    if (!found) {
+      found = {
+        uid,
+        name: email.split('@')[0],
+        faculty: '',
+        major: '',
+        semester: 'Semester 1',
+        email,
+        whatsapp: '',
+        bio: '',
+        hobbies: '',
+        availability: '',
+        photo: ''
+      };
+
+      users.push(found);
+      saveUsers(users);
+    }
+
+    appState.user = {
+      uid: found.uid || uid,
+      name: found.name || email.split('@')[0],
+      faculty: found.faculty || '',
+      major: found.major || '',
+      semester: found.semester || 'Semester 1',
+      email: found.email || email,
+      whatsapp: found.whatsapp || '',
+      bio: found.bio || '',
+      hobbies: found.hobbies || '',
+      availability: found.availability || '',
+      photo: found.photo || ''
+    };
+
+    saveCurrentUser(appState.user);
+
+    syncUserToHome();
+    setPage('home');
+  } catch (error) {
+    console.error(error);
+
+    if (error.code === 'auth/invalid-credential') {
+      alert('Email atau password salah.');
+    } else if (error.code === 'auth/network-request-failed') {
+      alert('Gagal login karena koneksi internet bermasalah.');
+    } else {
+      alert('Gagal login: ' + error.message);
+    }
+  } finally {
+    setButtonLoading('loginBtn', false);
+  }
 }
+    async function registerManual() {
+  setButtonLoading('registerBtn', true);
 
-        if (!isValidWhatsapp(whatsapp)) {
-          alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
-          setButtonLoading('registerBtn', false);
-          return;
-        }
+  try {
+    const name = document.getElementById('registerName').value.trim();
+    const faculty = document.getElementById('registerFaculty').value;
+    const major = document.getElementById('registerMajor').value;
+    const semester = document.getElementById('registerSemester').value;
+    const whatsappRaw = document.getElementById('registerWhatsapp').value.trim();
+    const whatsapp = normalizeWhatsapp(whatsappRaw);
+    const bio = document.getElementById('registerBio').value.trim();
+    const hobbies = document.getElementById('registerHobbies').value.trim();
+    const availability = document.getElementById('registerAvailability').value;
+    const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+    const password = document.getElementById('registerPassword').value.trim();
 
-        if (password.length < 8) {
-          alert('Password minimal 8 karakter.');
-          setButtonLoading('registerBtn', false);
-          return;
-        }
-
-        const users = getUsers();
-        const emailExists = users.some(user => user.email.toLowerCase() === email);
-        if (emailExists) {
-          alert('Email sudah terdaftar. Silakan login pakai akun itu.');
-          setButtonLoading('registerBtn', false);
-          return;
-        }
-
-       const newUser = { 
-  name, 
-  faculty, 
-  major, 
-  semester, 
-  whatsapp, 
-  email, 
-  password, 
-  bio, 
-  hobbies, 
-  availability, 
-  photo: '' 
-};
-        users.push(newUser);
-        saveUsers(users);
-        saveCurrentUser(newUser);
-
-        appState.user = { 
-  name, 
-  faculty, 
-  major, 
-  semester, 
-  email, 
-  whatsapp, 
-  bio, 
-  hobbies, 
-  availability, 
-  photo: '' 
-};
-        syncUserToHome();
-        setPage('home');
-        setButtonLoading('registerBtn', false);
-        alert('Akun berhasil dibuat. Sekarang kamu sudah masuk ke aplikasi.');
-      }, 800);
+    if (!name || !faculty || !major || !semester || !whatsapp || !bio || !hobbies || !availability || !email || !password) {
+      alert('Lengkapi semua data pendaftaran, termasuk bio, hobi, status, dan nomor WhatsApp.');
+      setButtonLoading('registerBtn', false);
+      return;
     }
 
-    function logoutUser() {
-      clearCurrentUser();
-      appState.selectedDiscussionFriend = '';
-      appState.selectedDiscussionFriendWhatsapp = '';
-      setPage('login');
-      switchAuthTab('login');
+    if (!isValidWhatsapp(whatsapp)) {
+      alert('Format nomor WhatsApp tidak valid. Gunakan format 08... atau 62...');
+      setButtonLoading('registerBtn', false);
+      return;
     }
+
+    if (password.length < 8) {
+      alert('Password minimal 8 karakter.');
+      setButtonLoading('registerBtn', false);
+      return;
+    }
+
+    const { createUserWithEmailAndPassword } = window.firebaseFns;
+
+    const result = await createUserWithEmailAndPassword(window.firebaseAuth, email, password);
+    const uid = result.user.uid;
+
+    const newUser = {
+      uid,
+      name,
+      faculty,
+      major,
+      semester,
+      whatsapp,
+      email,
+      password,
+      bio,
+      hobbies,
+      availability,
+      photo: ''
+    };
+
+    const users = getUsers();
+    const existsLocal = users.some(user => user.email.toLowerCase() === email);
+
+    if (!existsLocal) {
+      users.push(newUser);
+      saveUsers(users);
+    }
+
+    saveCurrentUser(newUser);
+
+    appState.user = newUser;
+    selectedProfilePhoto = '';
+
+    syncUserToHome();
+    setPage('home');
+
+    alert('Akun berhasil dibuat. Coba login juga dari HP dengan email dan password yang sama.');
+  } catch (error) {
+    console.error(error);
+
+    if (error.code === 'auth/email-already-in-use') {
+      alert('Email sudah terdaftar di Firebase. Silakan login.');
+    } else if (error.code === 'auth/invalid-email') {
+      alert('Format email tidak valid.');
+    } else if (error.code === 'auth/network-request-failed') {
+      alert('Gagal daftar karena koneksi internet bermasalah.');
+    } else {
+      alert('Gagal daftar akun: ' + error.message);
+    }
+  } finally {
+    setButtonLoading('registerBtn', false);
+  }
+}
+   async function logoutUser() {
+  try {
+    const { signOut } = window.firebaseFns;
+    await signOut(window.firebaseAuth);
+  } catch (error) {
+    console.error(error);
+  }
+
+  clearCurrentUser();
+  appState.selectedDiscussionFriend = '';
+  appState.selectedDiscussionFriendWhatsapp = '';
+  setPage('login');
+  switchAuthTab('login');
+}
 
     function populateFacultyOptions(selectId, includeAll = false) {
       const select = document.getElementById(selectId);
