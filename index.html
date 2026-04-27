@@ -1494,8 +1494,8 @@ async function loginManual() {
     };
 
     const { error: profileError } = await window.supabaseClient
-      .from('users')
-      .insert([newUser]);
+    .from('users')
+    .upsert([newUser]);
 
     if (profileError) {
       alert('Akun berhasil dibuat, tetapi profil gagal disimpan: ' + profileError.message);
