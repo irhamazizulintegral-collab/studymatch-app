@@ -2071,69 +2071,78 @@ function previewProfilePhoto(event) {
     }
 
   async function restoreSession() {
-  const localCurrent = getCurrentUser();
-  const sessionCurrentRaw = sessionStorage.getItem(STORAGE_CURRENT);
-  const sessionCurrent = sessionCurrentRaw ? JSON.parse(sessionCurrentRaw) : null;
+  try {
+    const { data: sessionData, error: sessionError } = await window.supabaseClient.auth.getSession();
 
-  let activeUser = localCurrent || sessionCurrent;
-
-  const { data: sessionData, error: sessionError } = await window.supabaseClient.auth.getSession();
-
-  if (sessionError) {
-    console.error('Gagal membaca session Supabase:', sessionError);
-  }
-
-  if (sessionData && sessionData.session && sessionData.session.user) {
-    const supabaseUser = sessionData.session.user;
-    const uid = supabaseUser.id;
-    const email = supabaseUser.email || '';
-
-    const { data: profile, error: profileError } = await window.supabaseClient
-      .from('users')
-      .select('*')
-      .eq('id', uid)
-      .single();
-
-    if (!profileError && profile) {
-      activeUser = {
-        uid,
-        id: profile.id,
-        email: profile.email || email,
-        name: profile.name || 'Pengguna',
-        faculty: profile.faculty || '',
-        major: profile.major || '',
-        semester: profile.semester || 'Semester 1',
-        whatsapp: profile.whatsapp || '',
-        bio: profile.bio || '',
-        hobbies: profile.hobbies || '',
-        availability: profile.availability || '',
-        photo: profile.photo || ''
-      };
+    if (sessionError) {
+      console.error('Gagal membaca session Supabase:', sessionError);
     }
+
+    if (sessionData && sessionData.session && sessionData.session.user) {
+      const supabaseUser = sessionData.session.user;
+      const uid = supabaseUser.id;
+      const email = supabaseUser.email || '';
+
+      const { data: profile, error: profileError } = await window.supabaseClient
+        .from('users')
+        .select('*')
+        .eq('id', uid)
+        .single();
+
+      if (!profileError && profile) {
+        appState.user = {
+          uid,
+          id: profile.id,
+          email: profile.email || email,
+          name: profile.name || 'Pengguna',
+          faculty: profile.faculty || '',
+          major: profile.major || '',
+          semester: profile.semester || 'Semester 1',
+          whatsapp: profile.whatsapp || '',
+          bio: profile.bio || '',
+          hobbies: profile.hobbies || '',
+          availability: profile.availability || '',
+          photo: profile.photo || ''
+        };
+
+        saveCurrentUser(appState.user);
+        syncUserToHome();
+        setPage('home');
+        return true;
+      }
+    }
+
+    const localCurrent = getCurrentUser();
+    const sessionCurrentRaw = sessionStorage.getItem(STORAGE_CURRENT);
+    const sessionCurrent = sessionCurrentRaw ? JSON.parse(sessionCurrentRaw) : null;
+    const fallbackUser = localCurrent || sessionCurrent;
+
+    if (fallbackUser && fallbackUser.email) {
+      appState.user = {
+        uid: fallbackUser.uid || fallbackUser.id || '',
+        id: fallbackUser.id || fallbackUser.uid || '',
+        name: fallbackUser.name || 'Pengguna',
+        faculty: fallbackUser.faculty || '',
+        major: fallbackUser.major || '',
+        semester: fallbackUser.semester || 'Semester 1',
+        email: fallbackUser.email || '',
+        whatsapp: fallbackUser.whatsapp || '',
+        bio: fallbackUser.bio || '',
+        hobbies: fallbackUser.hobbies || '',
+        availability: fallbackUser.availability || '',
+        photo: fallbackUser.photo || ''
+      };
+
+      syncUserToHome();
+      setPage('home');
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error('restoreSession error:', error);
+    return false;
   }
-
-  if (activeUser) {
-    appState.user = {
-      uid: activeUser.uid || activeUser.id || '',
-      id: activeUser.id || activeUser.uid || '',
-      name: activeUser.name || 'Pengguna',
-      faculty: activeUser.faculty || '',
-      major: activeUser.major || '',
-      semester: activeUser.semester || 'Semester 1',
-      email: activeUser.email || '',
-      whatsapp: activeUser.whatsapp || '',
-      bio: activeUser.bio || '',
-      hobbies: activeUser.hobbies || '',
-      availability: activeUser.availability || '',
-      photo: activeUser.photo || ''
-    };
-
-    syncUserToHome();
-    setPage('home');
-    return true;
-  }
-
-  return false;
 }
 
  async function init() {
