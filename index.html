@@ -1138,7 +1138,14 @@
   const SUPABASE_URL = "https://vblxfzmahmbjmjwsbxpy.supabase.co";
   const SUPABASE_KEY = "sb_publishable_aw-h4B2IIHz7luFcam0VvA_zP5sQRRS";
 
-  window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+  window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: window.localStorage
+    }
+  });
 </script>
   <script>
     const facultyMajors = {
