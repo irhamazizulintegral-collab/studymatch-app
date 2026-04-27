@@ -2051,32 +2051,67 @@ function previewProfilePhoto(event) {
       document.getElementById('scheduleEditIndex').value = -1;
     }
 
-  function restoreSession() {
-  const current = getCurrentUser();
+  async function restoreSession() {
+  const { data: sessionData, error: sessionError } = await window.supabaseClient.auth.getSession();
 
-  if (current) {
+  if (sessionError || !sessionData.session) {
+    return false;
+  }
+
+  const supabaseUser = sessionData.session.user;
+  const uid = supabaseUser.id;
+  const email = supabaseUser.email || '';
+
+  const { data: profile, error: profileError } = await window.supabaseClient
+    .from('users')
+    .select('*')
+    .eq('id', uid)
+    .single();
+
+  if (profileError || !profile) {
     appState.user = {
-      name: current.name || 'Pengguna',
-      faculty: current.faculty || '',
-      major: current.major || '',
-      semester: current.semester || 'Semester 1',
-      email: current.email || '',
-      whatsapp: current.whatsapp || '',
-      bio: current.bio || '',
-      hobbies: current.hobbies || '',
-      availability: current.availability || '',
-      photo: current.photo || ''
+      uid,
+      id: uid,
+      email,
+      name: email.split('@')[0] || 'Pengguna',
+      faculty: '',
+      major: '',
+      semester: 'Semester 1',
+      whatsapp: '',
+      bio: '',
+      hobbies: '',
+      availability: '',
+      photo: ''
     };
 
+    saveCurrentUser(appState.user);
     syncUserToHome();
     setPage('home');
     return true;
   }
 
-  return false;
+  appState.user = {
+    uid,
+    id: profile.id,
+    email: profile.email || email,
+    name: profile.name || 'Pengguna',
+    faculty: profile.faculty || '',
+    major: profile.major || '',
+    semester: profile.semester || 'Semester 1',
+    whatsapp: profile.whatsapp || '',
+    bio: profile.bio || '',
+    hobbies: profile.hobbies || '',
+    availability: profile.availability || '',
+    photo: profile.photo || ''
+  };
+
+  saveCurrentUser(appState.user);
+  syncUserToHome();
+  setPage('home');
+  return true;
 }
 
-  function init() {
+  async function init() {
   try {
     bootstrapUsers();
 
@@ -2103,7 +2138,7 @@ function previewProfilePhoto(event) {
       profileFaculty.addEventListener('change', e => populateMajorOptions(e.target.value, 'profileMajor'));
     }
 
-    const loggedIn = restoreSession();
+    const loggedIn = await restoreSession();
 
     if (!loggedIn) {
       setPage('login');
@@ -2117,14 +2152,13 @@ function previewProfilePhoto(event) {
     renderSchedules();
     populateDiscussionFriendSelect();
 
-   } catch (error) {
+  } catch (error) {
     console.error('Terjadi error saat memuat aplikasi:', error);
     setPage('login');
-    } finally {
+  } finally {
     hideInitialLoading();
   }
 }
-
 init();
 </script>
 </body>
