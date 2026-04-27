@@ -1128,36 +1128,7 @@
       </section>
     </div>
   </div>
-
-        <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-  import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signOut 
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBEQWm9BWrutL4tlepoLSBDEtZ9V7ec2IY",
-    authDomain: "studymatch-app-45677.firebaseapp.com",
-    projectId: "studymatch-app-45677",
-    storageBucket: "studymatch-app-45677.firebasestorage.app",
-    messagingSenderId: "151428590385",
-    appId: "1:151428590385:web:3d68c113e13af08e0d1e10"
-  };
-
-  const firebaseApp = initializeApp(firebaseConfig);
-  const auth = getAuth(firebaseApp);
-
-  window.firebaseAuth = auth;
-  window.firebaseFns = {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut
-  };
-</script>
-        <script type="module">
+<script type="module">
   import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
   const SUPABASE_URL = "https://vblxfzmahmbjmjwsbxpy.supabase.co";
@@ -1165,7 +1136,6 @@
 
   window.supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 </script>
-        
   <script>
     const facultyMajors = {
       'Fakultas Ilmu Pendidikan (FIP)': ['Administrasi Pendidikan','Bimbingan dan Konseling','Pendidikan Guru SD','Pendidikan Luar Biasa','Pendidikan Luar Sekolah','Pendidikan Anak Usia Dini','Teknologi Pendidikan'],
