@@ -1326,16 +1326,12 @@ function updateHomeProfileCard() {
     function goHome() { syncUserToHome(); setPage('home'); }
 
     function goBack() {
-    if (appState.currentPage === 'home') {
+  if (appState.currentPage === 'home') {
     return;
-    }
-      }
-      if (appState.currentPage === 'home') {
-        setPage('login');
-        return;
-      }
-      setPage('login');
-    }
+  }
+
+  setPage('home');
+}
 
     function openProfile() { fillProfileForm(); setPage('profile'); }
     function openDiscussion() { renderDiscussion(); renderDiscussionFriends(); populateDiscussionFriendSelect(); setPage('discussion'); }
