@@ -1215,12 +1215,16 @@ let selectedProfilePhoto = '';
       btn.classList.toggle('btn-loading', isLoading);
     }
 
-    function hideInitialLoading() {
+   function hideInitialLoading() {
   const loader = document.getElementById('loadingScreen');
   if (!loader) return;
 
   setTimeout(() => {
     loader.classList.add('hide');
+
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 800);
   }, 700);
 }
 
@@ -2075,10 +2079,27 @@ function previewProfilePhoto(event) {
 
   async function restoreSession() {
   try {
-    const { data: sessionData, error: sessionError } = await window.supabaseClient.auth.getSession();
+    // Ambil dulu data lokal agar aplikasi tetap bisa jalan meskipun Supabase error
+    const localCurrent = getCurrentUser();
+    const sessionCurrentRaw = sessionStorage.getItem(STORAGE_CURRENT);
+    const sessionCurrent = sessionCurrentRaw ? JSON.parse(sessionCurrentRaw) : null;
+    const fallbackUser = localCurrent || sessionCurrent;
+
+    // Batasi Supabase maksimal 3 detik, biar tidak loading terus
+    const timeout = new Promise((resolve) => {
+      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 3000);
+    });
+
+    const sessionResult = await Promise.race([
+      window.supabaseClient.auth.getSession(),
+      timeout
+    ]);
+
+    const sessionData = sessionResult.data;
+    const sessionError = sessionResult.error;
 
     if (sessionError) {
-      console.error('Gagal membaca session Supabase:', sessionError);
+      console.warn('Supabase session gagal, lanjut pakai data lokal:', sessionError.message);
     }
 
     if (sessionData && sessionData.session && sessionData.session.user) {
@@ -2086,11 +2107,17 @@ function previewProfilePhoto(event) {
       const uid = supabaseUser.id;
       const email = supabaseUser.email || '';
 
-      const { data: profile, error: profileError } = await window.supabaseClient
-        .from('users')
-        .select('*')
-        .eq('id', uid)
-        .single();
+      const profileResult = await Promise.race([
+        window.supabaseClient
+          .from('users')
+          .select('*')
+          .eq('id', uid)
+          .single(),
+        timeout
+      ]);
+
+      const profile = profileResult.data;
+      const profileError = profileResult.error;
 
       if (!profileError && profile) {
         appState.user = {
@@ -2115,11 +2142,6 @@ function previewProfilePhoto(event) {
       }
     }
 
-    const localCurrent = getCurrentUser();
-    const sessionCurrentRaw = sessionStorage.getItem(STORAGE_CURRENT);
-    const sessionCurrent = sessionCurrentRaw ? JSON.parse(sessionCurrentRaw) : null;
-    const fallbackUser = localCurrent || sessionCurrent;
-
     if (fallbackUser && fallbackUser.email) {
       appState.user = {
         uid: fallbackUser.uid || fallbackUser.id || '',
@@ -2143,11 +2165,11 @@ function previewProfilePhoto(event) {
 
     return false;
   } catch (error) {
-    console.error('restoreSession error:', error);
+    console.warn('restoreSession error, aplikasi tetap lanjut:', error);
     return false;
   }
 }
-
+    
  async function init() {
   try {
     bootstrapUsers();
